@@ -52,7 +52,6 @@ class UserController extends Controller
     public function update(Request $request)
     {
     }
-
     /**
      * Remove the specified resource from storage.
      * @return Response
