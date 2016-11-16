@@ -1,5 +1,9 @@
-<div class="navbar navbar-default" id="subnav">
+<div class="navbar navbar-default" style="left:0" id="subnav">
     <div class="col-md-12">
+
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
+          <i class="fa fa-list" aria-hidden="true"></i>
+        </button>
         
         <div class="collapse navbar-collapse" id="navbar-collapse2">
           <ul class="nav navbar-nav navbar-right">
@@ -42,7 +46,6 @@
                 System Settings <span class="caret"></span>
               </a>
             </li>
-
 
            </ul>
         </div>	

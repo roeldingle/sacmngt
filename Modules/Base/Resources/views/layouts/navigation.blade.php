@@ -4,7 +4,7 @@
           
           <a href="#" class="navbar-brand">SAC System</a>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
-          <i class="glyphicon glyphicon-search"></i>
+          <i class="fa fa-search" aria-hidden="true"></i>
           </button>
       
         </div>

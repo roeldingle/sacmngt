@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Module Dashboard</title>
-    </head>
-    <body>
-        @yield('content')
-    </body>
-</html>
+@extends('base::layouts.master')
+
+<!-- <h1>{{ Auth::user()->meta() }}</h1> -->
+@extends('base::layouts.navigation')
+@extends('base::layouts.sub-navigation')
+<!--main-->
+<div class="container-fluid" id="main">
+
+	@yield('content')
+    
+  <div class="clearfix"></div>
+      
+    <hr>
+    <div class="col-md-12 text-center"><p><a href="http://usebootstrap.com/theme/google-plus" target="_ext">Download Google Plus Style Template</a><br><a href="http://usebootstrap.com/theme/google-plus" target="_ext">More Bootstrap Templates by @Bootply</a></p></div>
+    <hr>
+    
+</div><!--/main-->
+
+
+
+
+
+
