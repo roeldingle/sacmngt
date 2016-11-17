@@ -23,7 +23,7 @@ class LoginController extends Controller
 
 
     public function postLogin(Request $request){
-        
+
         /*
             Validate user credentials and check if user is active
         */

@@ -43,6 +43,22 @@ class User extends Authenticatable
         return Meta::where('user_id', '=', $this->id)->get();
     }
 
+    /*
+		Users role
+	*/
+	public function role()
+    {
+        return $this->belongsTo('Modules\Role\Entities\Role');
+    }
+
+    /*
+		Users active
+	*/
+	public function scopeActive($query)
+    {
+        return $query->where('is_active','=', 1);
+    }
+
 
 	public static function saveUser($input){
 
@@ -84,10 +100,9 @@ class User extends Authenticatable
     	$user = User::findOrFail($this->id);
         foreach($user->meta() as $meta) {
             $user->setAttribute($meta->key ,$meta->value);
-        
         }
         return $user;
-        
     }
+
 
 }

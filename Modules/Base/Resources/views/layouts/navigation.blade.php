@@ -1,8 +1,10 @@
-<div class="navbar navbar-fixed-top header">
+<div class="navbar navbar-fixed-top header" >
   <div class="col-md-12">
-        <div class="navbar-header">
+        <div class="navbar-header" >
           
-          <a href="#" class="navbar-brand">SAC System</a>
+          <a href="#" class="navbar-brand" style="padding:5px;">
+            <img style="height:40px" src="https://www.straightarrow.com.ph/hs-fs/hub/235882/file-1496567258-png/SAC+Resources/agency/sacLogo.png?t=1479337865058&width=265&name=sacLogo.png">
+          </a>
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
           <i class="fa fa-search" aria-hidden="true"></i>
           </button>

@@ -6,15 +6,32 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
+use Auth;
+use Modules\User\Entities\User;
+
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('user::index');
+        $users = User::paginate(2);
+        $list = "all";
+
+        if ($request->has('show_active')) {
+            $users = User::active()->paginate(2);
+            $list = "active";
+        }else if($request->has('show_inactive')){
+            $users = User::where('is_active', 0)->paginate(2);
+            $list = "active";
+        }
+
+        //dd($users);
+        return view('user::index')
+        ->with('list',$list)
+        ->with('users',$users);
     }
 
     /**
