@@ -22,7 +22,7 @@ class UserController extends Controller
         
         $users = User::paginate($per_page);
 
-        if ($request->has('search_param') && $request->has('search')) {
+        if ($request->input('search_param') !== "all" && $request->has('search_param') && $request->has('search')) {
 
             $search['search_param'] = $request->input('search_param');
             $search['search'] = $request->input('search');
@@ -45,13 +45,21 @@ class UserController extends Controller
 
         }
 
-        
+
         /*all*/
         if ($request->input('search_param') == "all"){
-            $users = User::active()->paginate($per_page);
+
+            $search['search_param'] = $request->input('search_param');
+            $search['search'] = $request->input('search');
+
+            $users = User::active()->with('meta')
+            ->whereHas('meta', function ($query) use ($search) {
+                $query->where('users.email','LIKE', '%'.$search['search'].'%');
+                $query->orWhere('meta_user.value','LIKE', '%'.$search['search'].'%');
+            })
+            ->paginate($per_page);
         }
 
-       //dd($users);
 
         
 
