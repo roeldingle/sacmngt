@@ -40,7 +40,9 @@ class User extends Authenticatable
 	*/
 	public function meta()
     {
-        return Meta::where('user_id', '=', $this->id)->get();
+        return $this->hasMany('Modules\User\Entities\Meta');
+
+        //return Meta::where('id', '=', $this->user_id)->get();
     }
 
     /*
@@ -51,13 +53,12 @@ class User extends Authenticatable
         return $this->belongsTo('Modules\Role\Entities\Role');
     }
 
-    /*
-		Users active
-	*/
-	public function scopeActive($query)
+
+     public function scopeActive($query)
     {
-        return $query->where('is_active','=', 1);
+        return $query->where('is_active', 1);
     }
+
 
 
 	public static function saveUser($input){
@@ -95,14 +96,20 @@ class User extends Authenticatable
     }
 
 
+
+
+
     public function getUserMeta(){
 
     	$user = User::findOrFail($this->id);
-        foreach($user->meta() as $meta) {
+        foreach($user->meta as $meta) {
             $user->setAttribute($meta->key ,$meta->value);
         }
         return $user;
     }
+
+     
+
 
 
 }

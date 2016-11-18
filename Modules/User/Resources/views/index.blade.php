@@ -31,8 +31,6 @@
 
                   <div class="panel-body" style="padding-top:0">
 
-                  	
-
               		@include('user::layouts.search')
 
                         <table class="table table-striped table-bordered table-list">
@@ -40,7 +38,8 @@
 						      <tr>
 						      	<th width="5%"><input type="checkbox" name="check-all" class="check-all"></th>
 						      	<th width="5%">#</th>
-						        <th>Fullname</th>
+						        <th>Firstname</th>
+						        <th>Lastname</th>
 						        <th>Email</th>
 						        <th>Role</th>
 						        <th idth="5%">Status</th>
@@ -56,7 +55,8 @@
 					                 <tr>
 								      	<td><input type="checkbox" name="check" class="check"></td>
 								      	<td>1</td>
-								        <td>{{ $row->getUserMeta()->fname }} {{ $row->getUserMeta()->lname }}</td>
+								        <td>{{ $row->getUserMeta()->fname }}</td>
+								        <td>{{ $row->getUserMeta()->lname }}</td>
 								        <td>{{ $row->email }}</td>
 								        <td>{{ $row->role->name }}</td>
 								        <td>{!! ($row->is_active) ? '<span class="label label-success">active</span>' : '<span class="label label-default">inactive</span>' !!}</td>
@@ -75,7 +75,7 @@
 	                  <div class="col col-xs-4">Page 1 of 5
 	                  </div>
 	                  <div class="col col-xs-8" style="text-align:right">
-	                    {!! $users->appends(['list' => $list])->links() !!}
+	                    {!! $users->appends(['search_param' => $search['search_param'], 'search' => $search['search'] ])->links() !!}
 	                  </div>
 	                </div>
 	              </div>

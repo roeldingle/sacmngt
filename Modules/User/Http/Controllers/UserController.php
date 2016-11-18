@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 use Auth;
 use Modules\User\Entities\User;
+use Modules\User\Entities\Meta;
 
 class UserController extends Controller
 {
@@ -17,20 +18,45 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::paginate(2);
-        $list = "all";
+        $per_page = 2;
+        
+        $users = User::paginate($per_page);
 
-        if ($request->has('show_active')) {
-            $users = User::active()->paginate(2);
-            $list = "active";
-        }else if($request->has('show_inactive')){
-            $users = User::where('is_active', 0)->paginate(2);
-            $list = "active";
+        if ($request->has('search_param') && $request->has('search')) {
+
+            $search['search_param'] = $request->input('search_param');
+            $search['search'] = $request->input('search');
+
+            $meta_array = array('fname','lname');
+
+            if(in_array($search['search_param'], $meta_array)){
+
+                $users = User::active()->with('meta')
+                ->whereHas('meta', function ($query) use ($search) {
+                    $query->where('meta_user.key', $search['search_param']);
+                    $query->where('meta_user.value','LIKE', '%'.$search['search'].'%');
+                })
+                ->paginate($per_page);
+
+            }else{
+                $users = User::where($search['search_param'], 'LIKE', '%'.$search['search'].'%')->paginate($per_page);
+            }
+
+
         }
 
-        //dd($users);
+        
+        /*all*/
+        if ($request->input('search_param') == "all"){
+            $users = User::active()->paginate($per_page);
+        }
+
+       //dd($users);
+
+        
+
         return view('user::index')
-        ->with('list',$list)
+        ->with('search', (isset($search)) ? $search : 0)
         ->with('users',$users);
     }
 

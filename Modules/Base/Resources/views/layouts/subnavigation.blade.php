@@ -42,9 +42,13 @@
              </li>
 
              <li>
-              <a href="#aboutModal" role="button" data-toggle="modal">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 System Settings <span class="caret"></span>
               </a>
+                <ul class="dropdown-menu">
+                  <li><a href="/user"><i class="fa fa-users" aria-hidden="true"></i> &nbsp;Users</a></li>
+                  <li><a href="/role"><i class="fa fa-address-card-o" aria-hidden="true"></i> &nbsp;Roles</a></li>
+                </ul>
             </li>
 
            </ul>

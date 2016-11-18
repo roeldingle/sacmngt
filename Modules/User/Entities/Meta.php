@@ -22,4 +22,18 @@ class Meta extends Model
 	 */
 	protected $fillable = ['user_id','key', 'value'];
 
+
+	/*
+		Users role
+	*/
+	public function user()
+    {
+        return $this->belongsTo('Modules\User\Entities\User');
+    }
+
+    // public function user()
+    // {
+    // 	return $this->belongsToMany('App\Models\User','meta_user','meta_id','user_id');
+    // }
+
 }
