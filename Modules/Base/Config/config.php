@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Base'
+    'name' => 'Base',
+    'default_table_limit' => 5,
 ];

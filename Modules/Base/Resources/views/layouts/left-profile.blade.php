@@ -5,24 +5,24 @@
          <div class="panel-heading">
          		
             <div class="media-heading" >
-            	<img class="img-thumbnail pull-left" style="width:60px;margin-right:5px" src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/p240x240/11825953_1047734388583992_1727016485304329009_n.jpg?oh=ed7ab6e96b1c6207630c1ea5103c5756&oe=58C0C07E">
+            	<img class="img-thumbnail pull-left" style="width:60px;margin-right:5px" src="{{ Auth::user()->setMeta()->avatar }}">
             	<div class="info-container" style="padding:15px">
             		<strong>
-	            		{{ Auth::user()->getUserMeta()->fname }} {{ Auth::user()->getUserMeta()->lname }}
+	            		{{ Auth::user()->setMeta()->fname }} {{ Auth::user()->setMeta()->lname }}
 	            	</strong>
 	            	<br />
-	            	<small>{{ Auth::user()->getUserMeta()->email }}</small>
+	            	<span style="font-size:10px">{{ Auth::user()->setMeta()->email }}</span>
             	</div>
             	
             </div>
             
       	</div>
-   			<div class="panel-body">
+   			<!-- <div class="panel-body">
               
-              <!-- <div class="well well-sm"> -->
+              <div class="well well-sm">
                 
-               <!-- </div> -->
-         </div>
+               <!-- </div>
+         </div> -->
       </div> 
  </div>
  <!--/left-->

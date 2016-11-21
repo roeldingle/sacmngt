@@ -26,7 +26,7 @@
 
                 <div class="panel panel-default">
                   <div class="panel-heading">
-	                <h3>User List  <button type="button" class="btn btn-sm btn-primary btn-create pull-right">Create New</button></h3>
+	                <h3>User List  <a class="btn btn-sm btn-primary btn-create pull-right" href="{{ route('user.create') }}">Create New</a></h3>
                   </div>
 
                   <div class="panel-body" style="padding-top:0">
@@ -42,37 +42,50 @@
 						        <th>Lastname</th>
 						        <th>Email</th>
 						        <th>Role</th>
-						        <th idth="5%">Status</th>
+						        <th idth="5%">Action</th>
 						      </tr>
 						    </thead>
 						    <tbody>
-
+						    	
 						    	@if(count($users) <= 0)
-					                <tr role="row"><td colspan="6">No results found</td></tr>
+					                <tr role="row"><td colspan="8" style="text-align:center">No results found</td></tr>
 					              @else
 
 					                @foreach($users as $index=>$row)
+					                
 					                 <tr>
 								      	<td><input type="checkbox" name="check" class="check"></td>
-								      	<td>1</td>
-								        <td>{{ $row->getUserMeta()->fname }}</td>
-								        <td>{{ $row->getUserMeta()->lname }}</td>
+								      	<td>{{ $loop->iteration }}</td>
+								        <td>{{ $row->setMeta()->fname }}</td>
+								        <td>{{ $row->setMeta()->lname }}</td>
 								        <td>{{ $row->email }}</td>
 								        <td>{{ $row->role->name }}</td>
-								        <td>{!! ($row->is_active) ? '<span class="label label-success">active</span>' : '<span class="label label-default">inactive</span>' !!}</td>
+								        <td class="">
+								      	<a href="{{ route( 'user.show', ['id' => $row->id] ) }}">View</a> |
+					                      <a href="{{ route( 'user.edit', ['id' => $row->id] ) }}">Edit</a> 
+					                    </td>
 								      </tr>
-					                 @endforeach
+							      
+					                @endforeach
+
 
 					              @endif
+					          	
 
 						    </tbody>
 						  </table>
+
+						  <div>
+						  	<button type="button" class="btn btn-sm btn-danger btn-delete">Delete item(s)</button>
+						 </div>
 
                   </div>
 
                   <div class="panel-footer">
 	                <div class="row">
-	                  <div class="col col-xs-4">Page 1 of 5
+	                  <div class="col col-xs-4">
+	                  	<p>{{ $users->total() }} result(s)</p>
+	                  	Page {{ $users->currentPage() }} of {{ $users->lastPage() }}
 	                  </div>
 	                  <div class="col col-xs-8" style="text-align:right">
 	                    {!! $users->appends(['search_param' => $search['search_param'], 'search' => $search['search'] ])->links() !!}

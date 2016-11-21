@@ -9,6 +9,9 @@ use Illuminate\Routing\Controller;
 use Auth;
 use Modules\User\Entities\User;
 use Modules\User\Entities\Meta;
+use Module;
+use Config;
+use Validator;
 
 class UserController extends Controller
 {
@@ -18,54 +21,20 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = 2;
-        
-        $users = User::paginate($per_page);
 
-        if ($request->input('search_param') !== "all" && $request->has('search_param') && $request->has('search')) {
-
-            $search['search_param'] = $request->input('search_param');
-            $search['search'] = $request->input('search');
-
-            $meta_array = array('fname','lname');
-
-            if(in_array($search['search_param'], $meta_array)){
-
-                $users = User::active()->with('meta')
-                ->whereHas('meta', function ($query) use ($search) {
-                    $query->where('meta_user.key', $search['search_param']);
-                    $query->where('meta_user.value','LIKE', '%'.$search['search'].'%');
-                })
-                ->paginate($per_page);
-
-            }else{
-                $users = User::where($search['search_param'], 'LIKE', '%'.$search['search'].'%')->paginate($per_page);
-            }
-
-
-        }
-
-
-        /*all*/
-        if ($request->input('search_param') == "all"){
-
-            $search['search_param'] = $request->input('search_param');
-            $search['search'] = $request->input('search');
-
-            $users = User::active()->with('meta')
-            ->whereHas('meta', function ($query) use ($search) {
-                $query->where('users.email','LIKE', '%'.$search['search'].'%');
-                $query->orWhere('meta_user.value','LIKE', '%'.$search['search'].'%');
-            })
-            ->paginate($per_page);
-        }
-
-
-        
+        $users = User::getUserSearch($request);
 
         return view('user::index')
         ->with('search', (isset($search)) ? $search : 0)
         ->with('users',$users);
+    }
+
+    public function show($id){
+
+        $user = User::findOrFail($id);
+
+        return view('user::show')
+        ->with('user', $user);
     }
 
     /**
@@ -74,7 +43,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        return view('user::form');
     }
 
     /**
@@ -84,15 +53,42 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+       $validator = Validator::make($request->all(), [
+            'role_id' => 'required',
+            'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
+            'fname' => 'required|min:2',
+            'lname' => 'required|min:2',
+            'avatar' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('user.create')
+                ->withErrors($validator);
+        }
+
+        $created = User::saveUser($request->all());
+
+        dd($created);
+
+        if($created){
+            return redirect()
+            ->route('user.edit', ['id' => $created->id])
+            ->with('info','New user created successfully!');
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      * @return Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('user::edit');
+      $user = User::findOrFail($id);
+
+        return view('user::form')
+        ->with('user', $user);
     }
 
     /**
@@ -100,9 +96,30 @@ class UserController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request, $id){
+
+        $user = User::findOrFail($id);
+
+
+        $validator = Validator::make($request->all(), [
+            'role_id' => 'required',
+            'email' => 'required|unique:users,email,'.$id.',id,is_active,1|email|max:255',
+            'fname' => 'required|min:2',
+            'lname' => 'required|min:2',
+            'avatar' => 'required',
+        ]);
+
+        
+
+        User::editUser($request, $user);
+
+        return redirect()
+            ->route('user.edit',['id' => $user->id])
+            ->with('info','User has been updated!')
+            ->with('alert', 'alert-success');
+
     }
+
     /**
      * Remove the specified resource from storage.
      * @return Response
