@@ -70,12 +70,12 @@ class UserController extends Controller
 
         $created = User::saveUser($request->all());
 
-        dd($created);
 
         if($created){
             return redirect()
             ->route('user.edit', ['id' => $created->id])
-            ->with('info','New user created successfully!');
+            ->with('info','New user created successfully!')
+            ->with('alert', 'alert-success');
         }
     }
 
@@ -109,14 +109,21 @@ class UserController extends Controller
             'avatar' => 'required',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()
+                ->route('user.edit',['id' => $user->id])
+                ->withErrors($validator);
+        }
+
+        $updated = User::editUser($request->all(), $user);
+
         
-
-        User::editUser($request, $user);
-
-        return redirect()
+        if($updated){
+            return redirect()
             ->route('user.edit',['id' => $user->id])
             ->with('info','User has been updated!')
             ->with('alert', 'alert-success');
+        }
 
     }
 
@@ -124,7 +131,21 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      * @return Response
      */
-    public function destroy()
-    {
+    public function destroy(Request $request){
+
+       $values = array('is_active'=> 0);
+       
+       $affectedRows = User::whereIn('id',$request->id)->update($values);
+
+        \Session::flash('info','User has been deleted!');
+        \Session::flash('alert', 'alert-danger');
+
+        $return = [
+            'affectedRows' => $affectedRows,
+            'redirect' => $request->return_route
+        ];
+
+        return $return;
+        
     }
 }

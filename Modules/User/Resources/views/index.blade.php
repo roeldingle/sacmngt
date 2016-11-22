@@ -18,7 +18,7 @@
 
               @include('base::layouts.alert')
             	 
-              	<ol class="breadcrumb">
+              	<ol class="breadcrumb" style="margin-bottom:5px;border-radius: 0;">
 				  <li><a href="#">Home</a></li>
 				  <li><a href="#">Library</a></li>
 				  <li class="active">Data</li>
@@ -33,10 +33,11 @@
 
               		@include('user::layouts.search')
 
+              			{{ csrf_field() }}
                         <table class="table table-striped table-bordered table-list">
 						    <thead>
 						      <tr>
-						      	<th width="5%"><input type="checkbox" name="check-all" class="check-all"></th>
+						      	<th width="5%"><input type="checkbox" name="checkall" class="checkall"></th>
 						      	<th width="5%">#</th>
 						        <th>Firstname</th>
 						        <th>Lastname</th>
@@ -54,7 +55,7 @@
 					                @foreach($users as $index=>$row)
 					                
 					                 <tr>
-								      	<td><input type="checkbox" name="check" class="check"></td>
+								      	<td><input type="checkbox" name="check" class="check" value="{{ $row->id }}"></td>
 								      	<td>{{ $loop->iteration }}</td>
 								        <td>{{ $row->setMeta()->fname }}</td>
 								        <td>{{ $row->setMeta()->lname }}</td>
@@ -76,7 +77,7 @@
 						  </table>
 
 						  <div>
-						  	<button type="button" class="btn btn-sm btn-danger btn-delete">Delete item(s)</button>
+						  	<button type="button" id="delete-btn" class="btn btn-sm btn-danger btn-delete">Delete item(s)</button>
 						 </div>
 
                   </div>

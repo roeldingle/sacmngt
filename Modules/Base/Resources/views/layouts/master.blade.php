@@ -16,6 +16,9 @@
   </head>
   <body>
 
+    <!--hidden value-->
+    <input type="hidden" nam="current_url" id="current_url" value="{{ Request::url() }}" />
+
     <div class="container-full">
         @yield('content')
     </div> <!-- /container -->

@@ -97,41 +97,39 @@ class User extends Authenticatable
 	        $meta->save();
 		}
         
-        return true;
+        return $user;
     }
 
 
-    public static function editUser($request, $user){
+    public static function editUser($input, $user){
 
-        $user->role_id = $user['role_id'];
-        $user->email = $user['email'];
+        $user->role_id = $input['role_id'];
+        $user->email = $input['email'];
         $user->is_active = true;
-        $user->save();
+        $userSaved = $user->save();
 
-        dd($user);
 
         /*unset user table keys*/
-        $removeKeys = array('_token','role_id', 'email', 'password','password_confirmation');
+        $removeKeys = array('_token','role_id', 'email');
         foreach($removeKeys as $key) {
-           unset($user[$key]);
-        }
-
-        foreach($user as $key=>$value) {
-            $metaData = [
-                'user_id' => [$user->id],
-                'key' => [$key],
-                'value' => [$value]
-            ];
-
+           unset($input[$key]);
         }
 
 
-        $synched = $user->meta($metaData);
-
+        foreach($input as $key=>$value) {
+            $meta = $user->meta()
+                ->where('key', $key)
+                ->first() ?: new Meta(['key' => $key]);
+            
+            $meta->user_id = $user->id;
+            $meta->key = $key;
+            $meta->value = $value;
+            $metaSaved = $meta->save();
+        }
         
-        if($synched){
-            //dd($synched);
-            return true;
+        
+        if($userSaved && $metaSaved){
+            return $user;
         }else{
             return false;
         }

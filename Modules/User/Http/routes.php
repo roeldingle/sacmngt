@@ -37,16 +37,11 @@ Route::group(
 		'as' => 'user.update',
 	]);
 
-	Route::post('/{id}/ajaxdelete',[
-		'uses' => 'UserController@delete',
-		'as' => 'user.delete',
+	Route::post('/{id}/destroy',[
+		'uses' => 'UserController@destroy',
+		'as' => 'user.destroy',
 	]);
 
-	
-
-	
-
-	
 
 	
 });

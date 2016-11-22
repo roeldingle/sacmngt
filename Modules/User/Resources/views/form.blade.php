@@ -67,7 +67,7 @@
 						                  <li><a href="#4">User</a></li>
 						                </ul>
 						            </div>
-						            <input type="hidden" name="role_id" value="@if(isset($user)) {{ old('role_id', $user->role_id) }} @endif"  id="search_param">         
+						            <input type="hidden" name="role_id" value="@if(isset($user)){{ old('role_id', $user->role_id) }}@endif"  id="search_param">         
 						        </div>
 						    </div>
 						    <!--//user role select type-->
@@ -75,28 +75,28 @@
 						    <!--email input type-->
 						    <div style="margin-bottom: 25px" class="input-group">
 						        <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-						        <input type="text" class="form-control" name="email" value="@if(isset($user)) {{ old('email', $user->email) }} @endif" placeholder="Email Address">
+						        <input type="text" class="form-control" name="email" value="@if(isset($user)){{ old('email', $user->email) }}@endif" placeholder="Email Address">
 						    </div>
 						    <!--//email input type-->
 
 						    <!--fname input type-->
 						    <div style="margin-bottom: 25px" class="input-group">
 						        <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-						        <input type="text" class="form-control" name="fname" value="@if(isset($user)) {{ old('fname', $user->setMeta()->fname) }} @endif" placeholder="First name">
+						        <input type="text" class="form-control" name="fname" value="@if(isset($user)){{ old('fname', $user->setMeta()->fname)}}@endif" placeholder="First name">
 						    </div>
 						    <!--//fname input type-->
 
 						    <!--lname input type-->
 						    <div style="margin-bottom: 25px" class="input-group">
 						        <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-						        <input type="text" class="form-control" name="lname" value="@if(isset($user)) {{ old('lname', $user->setMeta()->lname) }} @endif" placeholder="Last name">
+						        <input type="text" class="form-control" name="lname" value="@if(isset($user)){{ old('lname', $user->setMeta()->lname) }}@endif" placeholder="Last name">
 						    </div>
 						    <!--//lname input type-->
 
 						    <!--avatar input type-->
 						    <div style="margin-bottom: 25px" class="input-group">
 						        <span class="input-group-addon"><i class="fa fa-photo" aria-hidden="true"></i></span>
-						        <input type="text" class="form-control" name="avatar" value="@if(isset($user)) {{ old('avatar', $user->setMeta()->avatar) }} @endif" placeholder="Paste Avatar here">
+						        <input type="text" class="form-control" name="avatar" value="@if(isset($user)){{ old('avatar', $user->setMeta()->avatar)}}@endif" placeholder="Paste Avatar here">
 						    </div>
 						    <!--//avatar input type-->
 
