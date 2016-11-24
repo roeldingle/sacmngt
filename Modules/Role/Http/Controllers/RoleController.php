@@ -19,9 +19,8 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-
-        //$roles = Role::getRoleSearch($request);
-        $roles = Role::active()->get();
+        $per_page = config('app.default_table_limit');
+        $roles = Role::active()->paginate($per_page);
 
         return view('role::index')
         ->with('search', (isset($search)) ? $search : 0)
@@ -102,7 +101,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name,NULL,id,is_active,1',
+            'name' => 'required|unique:roles,name,'.$id.',id,is_active,1',
             'description' => 'required|min:2',
         ]);
 

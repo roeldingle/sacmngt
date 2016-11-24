@@ -23,7 +23,7 @@
                   @include('role::layouts.table')
                   <!--//panel body-->
                   <!--panel footer-->
-                  
+                  @include('role::layouts.footer')
                 <!--//panel footer-->
                   
                 </div>
