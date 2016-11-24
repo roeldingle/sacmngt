@@ -10,7 +10,6 @@ use Auth;
 use Modules\User\Entities\User;
 use Modules\User\Entities\Meta;
 use Module;
-use Config;
 use Validator;
 
 class UserController extends Controller
@@ -43,7 +42,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user::form');
+        return view('user::create');
     }
 
     /**
@@ -87,7 +86,7 @@ class UserController extends Controller
     {
       $user = User::findOrFail($id);
 
-        return view('user::form')
+        return view('user::edit')
         ->with('user', $user);
     }
 
@@ -99,7 +98,6 @@ class UserController extends Controller
     public function update(Request $request, $id){
 
         $user = User::findOrFail($id);
-
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',

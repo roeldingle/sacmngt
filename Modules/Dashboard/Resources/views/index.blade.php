@@ -1,22 +1,22 @@
-@extends('base::layouts.master')
+@extends('layouts.master')
 
 
 @section('content')
 
-    @include('base::layouts.navigation')
+    @include('layouts.navigation')
     <div class="clearfix"></div>
-    @include('base::layouts.subnavigation')
+    @include('layouts.subnavigation')
     <!--main-->
     <div class="container-fluid" id="main">
 
        <div class="row">
 
-          @include('base::layouts.left-profile')
+          @include('layouts.left-profile')
 
           <!--center-->
         	<div class="col-sm-6 col-md-6">
 
-              @include('base::layouts.alert')
+              @include('layouts.alert')
             	 
                <div class="well"> 
                    <form class="form-horizontal" role="form">
@@ -46,11 +46,11 @@
           </div>
           <!--/center-->
 
-          @include('base::layouts.right')
+          @include('layouts.right')
 
       </div><!--/row-->
       
-      @include('base::layouts.footer')
+      @include('layouts.footer')
       
     </div><!--/main-->
 @stop

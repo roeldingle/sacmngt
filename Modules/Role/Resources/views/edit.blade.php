@@ -16,15 +16,13 @@
               @include('layouts.alert')
               	<!--panel-->
                 <div class="panel panel-default">
-                  <!--panel header (pass title, create_btn is display Create new button)-->
-	                @include('user::layouts.header', ['title' => 'User List', 'create_btn' => true]) 
+                  <!--panel header-->
+	                @include('role::layouts.header', ['title' => 'Edit role'])
                   <!--//panel header-->
                   <!--panel body-->
-          			@include('user::layouts.table')
+          			@include('role::layouts.form')
                   <!--//panel body-->
-                  <!--panel footer-->
-	                @include('user::layouts.footer')
-	              <!--//panel footer-->
+                 
                 </div>
                 <!--//panel-->
           </div>

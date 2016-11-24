@@ -6,6 +6,13 @@ use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider
 {
+
+    /*
+        Change 
+    */
+
+    protected $module = 'user';
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -43,10 +50,10 @@ class UserServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('user.php'),
+            __DIR__.'/../Config/config.php' => config_path($this->module.'.php'),
         ]);
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'user'
+            __DIR__.'/../Config/config.php', $this->module
         );
     }
 
@@ -57,7 +64,7 @@ class UserServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = base_path('resources/views/modules/user');
+        $viewPath = base_path('resources/views/modules/'.$this->module);
 
         $sourcePath = __DIR__.'/../Resources/views';
 
@@ -66,8 +73,8 @@ class UserServiceProvider extends ServiceProvider
         ]);
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/user';
-        }, \Config::get('view.paths')), [$sourcePath]), 'user');
+            return $path . '/modules/'.$this->module;
+        }, \Config::get('view.paths')), [$sourcePath]), $this->module);
     }
 
     /**
@@ -77,12 +84,12 @@ class UserServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = base_path('resources/lang/modules/user');
+        $langPath = base_path('resources/lang/modules/'.$this->module);
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'user');
+            $this->loadTranslationsFrom($langPath, $this->module);
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'user');
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', $this->module);
         }
     }
 

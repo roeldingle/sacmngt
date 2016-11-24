@@ -1,4 +1,4 @@
-@extends('base::layouts.master')
+@extends('layouts.master')
 
 @section('content')
         <div class="container">    
@@ -20,7 +20,7 @@
                 <div style="padding-top:30px" class="panel-body" >
 
 
-                    @include('base::layouts.alert')
+                    @include('layouts.alert')
 
                     <!--form-->
                     <form id="loginform" class="form-horizontal" role="form" action="/login" method="POST">

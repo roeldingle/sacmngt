@@ -7,5 +7,8 @@ Route::group(
 	  'namespace' => 'Modules\Dashboard\Http\Controllers'
 	], function() {
 
-    Route::get('/', 'DashboardController@index');
+    Route::get('/',[
+		'uses' => 'DashboardController@index',
+		'as' => 'dashboard',
+	]);
 });

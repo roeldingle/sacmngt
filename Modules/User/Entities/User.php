@@ -156,7 +156,7 @@ class User extends Authenticatable
 	*/
     public static function getUserSearch($request){
 
-    	$per_page = Config::get('base.default_table_limit');
+    	$per_page = config('app.default_table_limit');
 
     	/*default value*/
     	$users = User::active()->paginate($per_page);
