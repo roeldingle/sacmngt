@@ -1,41 +1,31 @@
-@extends('layouts.master')
+@extends('main.two-column-master')
 
+<!--main header part-->
+@include('main.navigation')
+@include('main.subnavigation')
+<!--//main header part-->
 
-@section('content')
-	<!--main header part-->
-    @include('layouts.navigation')
-    @include('layouts.subnavigation')
-    <!--//main header part-->
-
-    <!--main content part-->
-    <div class="container-fluid" id="main">
-       <div class="row">
-          @include('layouts.left-profile')
-          <!--center-->
-        	<div class="col-sm-9 col-md-9">
-              @include('layouts.alert')
-              	<!--panel-->
-                <div class="panel panel-default">
-                  <!--panel header (pass title, create_btn is display Create new button)-->
-	                @include('user::layouts.header', ['title' => 'User List', 'create_btn' => true]) 
-                  <!--//panel header-->
-                  <!--panel body-->
-          			@include('user::layouts.table')
-                  <!--//panel body-->
-                  <!--panel footer-->
-	                @include('user::layouts.footer')
-	              <!--//panel footer-->
-                </div>
-                <!--//panel-->
-          </div>
-          <!--/center-->
-      </div>
-      <!--/row-->
-
-      <!--main footer part-->
-      @include('layouts.footer')
-      <!--/main footer part-->
-
-    </div>
-    <!--/main content part-->
+<!--left part contains profile-->
+@section('content-left')
+  @include('main.left-profile')
 @stop
+<!--//left part contains profile-->
+
+<!--center part contains main content-->
+@section('content-center')
+  @include('main.alert')
+  <!--panel-->
+  <div class="panel panel-default">
+    <!--panel header (pass title, create_btn is display Create new button)-->
+    @include('user::layouts.header', ['title' => 'User List', 'create_btn' => true]) 
+    <!--//panel header-->
+    <!--panel body-->
+    @include('user::layouts.table')
+    <!--//panel body-->
+    <!--panel footer-->
+    @include('user::layouts.footer')
+  <!--//panel footer-->
+  </div>
+  <!--//panel-->
+@stop
+<!--//center part contains main content-->

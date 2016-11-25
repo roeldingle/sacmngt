@@ -1,7 +1,7 @@
-@extends('layouts.master')
+@extends('main.one-column-master')
 
 @section('content')
-        <div class="container">    
+<div class="container">    
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-info" >
                 <div class="panel-heading">
@@ -20,7 +20,7 @@
                 <div style="padding-top:30px" class="panel-body" >
 
 
-                    @include('layouts.alert')
+                    @include('main.alert')
 
                     <!--form-->
                     <form id="loginform" class="form-horizontal" role="form" action="/login" method="POST">
