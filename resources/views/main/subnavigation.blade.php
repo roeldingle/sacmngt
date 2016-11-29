@@ -11,11 +11,11 @@
               <a href="{{ route('dashboard') }}">Dashboard</a>
              </li>
              <li class="">
-              <a href="#">IT Support</a>
+              <a href="/ticket/it">IT Support</a>
              </li>
 
              <li class="">
-              <a href="#">HR Support</a>
+              <a href="/ticket/hr">HR Support</a>
              </li>
 
              <li class="">

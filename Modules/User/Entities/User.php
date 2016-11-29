@@ -55,6 +55,14 @@ class User extends Authenticatable
     }
 
     /*
+        Users ticket
+    */
+    public function ticket()
+    {
+        return $this->hasMany('Modules\Ticket\Entities\Ticket', 'user_id');
+    }
+
+    /*
 		get active users
 	*/
     public function scopeActive($query)
@@ -148,6 +156,9 @@ class User extends Authenticatable
         foreach($user->meta as $meta) {
             $user->setAttribute($meta->key ,$meta->value);
         }
+
+        $user->avatar = ($user->avatar !== null) ? $user->avatar : 'http://www.qatarliving.com/sites/all/themes/qatarliving_v3/images/avatar.jpeg';
+
         return $user;
     }
 
@@ -201,6 +212,7 @@ class User extends Authenticatable
 
         return $users;
     }
+
 
      
 
