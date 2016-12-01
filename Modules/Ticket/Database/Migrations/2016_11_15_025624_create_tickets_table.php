@@ -37,7 +37,7 @@ class CreateTicketsTable extends Migration
 
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',12);
+            $table->string('code',50);
             $table->integer('department_id')->unsigned()->index();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->integer('user_id')->unsigned()->index();

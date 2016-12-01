@@ -15,8 +15,8 @@ class Ticket extends Model
     /**
      * Always capitalize the first name when we save it to the database
      */
-    public function setCodeAttribute($value) {
-        $this->attributes['code'] = (strtoupper(substr(md5($value), 0, 8)));
+    public function setCodeAttribute($array) {
+        $this->attributes['code'] = (strtoupper($array['prefix']."-".substr(md5($array['value']), 0, 8))."-".date('mdy'));
     }
 
 
@@ -38,6 +38,16 @@ class Ticket extends Model
     public function department()
     {
         return $this->hasOne('Modules\Ticket\Entities\Department', 'id', 'department_id' );
+    }
+
+    public function replies()
+    {
+        return $this->hasMany('Modules\Ticket\Entities\Reply', 'ticket_id');
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany('Modules\Ticket\Entities\Attachment', 'ticket_id');
     }
 
     public function scopeActive($query)

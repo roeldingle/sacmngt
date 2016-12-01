@@ -4,10 +4,11 @@
 	<table class="table table-striped table-bordered table-list">
 	    <thead>
 	      <tr>
-	      	<th width="5%"><input type="checkbox" name="checkall" class="checkall"></th>
-	      	<th width="5%">#</th>
+	      	<th width="2%"><input type="checkbox" name="checkall" class="checkall"></th>
+	      	<th width="3%">#</th>
 	        <th>Priority</th>
-	        <th>Subject</th>
+	        <th>Ticket Code</th>
+	        <th width="30%">Subject</th>
 	        <th>Status</th>
 	        <th>Created</th>
 	        <th>Last activity</th>
@@ -16,13 +17,14 @@
 	    </thead>
 	    <tbody>
 	    	@if(count($tickets) <= 0)
-	            <tr role="row"><td colspan="8" style="text-align:center">No results found</td></tr>
+	            <tr role="row"><td colspan="10" style="text-align:center">No results found</td></tr>
 	          @else
 	            @foreach($tickets as $index=>$row)
 	             <tr>
 			      	<td><input type="checkbox" name="check" class="check" value="{{ $row->id }}"></td>
 			      	<td>{{ $loop->iteration }}</td>
 			      	<td>{{ $row->priority->name }}</td>
+			      	<td>{{ $row->code }}</td>
 			        <td>{{ $row->subject }}</td>
 			        <td>{{ $row->status->name }}</td>
 			        <td>{{ Carbon\Carbon::parse($row->created_at)->toDayDateTimeString() }}</td>

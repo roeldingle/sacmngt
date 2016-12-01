@@ -6,7 +6,6 @@ Route::group(
 	[
 	'middleware' => ['web','auth','ticket.owner'],
 	 'prefix' => 'ticket/'.$department_segment,
-	 //'domain' => '{department}.ticket',
 	  'namespace' => 'Modules\Ticket\Http\Controllers'
 	], function()
 	{
@@ -45,6 +44,34 @@ Route::group(
 	Route::post('/{id}/destroy',[
 		'uses' => 'TicketController@destroy',
 		'as' => 'ticket.destroy',
+	]);
+
+
+
+});
+
+Route::group(
+	[
+	'middleware' => ['web','auth'],
+	 'prefix' => 'reply/'.$department_segment,
+	  'namespace' => 'Modules\Ticket\Http\Controllers'
+	], function()
+	{
+
+    Route::post('/store',[
+		'uses' => 'ReplyController@store',
+		'as' => 'reply.store',
+	]);
+
+
+	Route::post('/{id}/update',[
+		'uses' => 'ReplyController@update',
+		'as' => 'reply.update',
+	]);
+
+	Route::post('/{id}/destroy',[
+		'uses' => 'ReplyController@destroy',
+		'as' => 'reply.destroy',
 	]);
 
 

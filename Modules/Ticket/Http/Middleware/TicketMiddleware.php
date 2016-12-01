@@ -28,18 +28,20 @@ class TicketMiddleware
 
             if(
                 $request->segment('3') !== null 
-                && in_array($request->segment('3'), ['create','store','delete']) == false
-                //&& is_array( explode(',', $request->segment('3')) == false ) 
+                && in_array($request->route()->getName(), ['ticket.create','ticket.store','ticket.destroy'] ) == false
                 ){
 
                 $code = $request->segment('3');
-
                 $ticket = $request->department->ticket->where('code', $code)->first();
+
+                if(empty($ticket)){
+                    return abort(401, 'Unauthorized action.');
+                }
 
                 if($ticket->user_id == Auth::user()->id){
                     return $next($request);
                 }else{
-                    return abort(404);
+                    return abort(401, 'You are not authorized to view this.');
                 }
 
             }else{
@@ -47,7 +49,7 @@ class TicketMiddleware
             }
 
         }else{
-            return abort(404);
+            return abort(404, 'Page not found.');
         }
 
         

@@ -1,25 +1,26 @@
 /*
-    onload events
+    onload eventsdfdf
 */
 $('input[name="checkall"]').bind('click',function () {
     $('input[type="checkbox"]').prop("checked", $(this).prop("checked"));
 });
 
 $('#delete-btn').bind('click',function (event) {
-
     event.preventDefault();
-
      var attr = {
         title: 'Confirmation',
         body: 'Are you sure you want to delete selected item(s)?',
         value: ['hidden',],
         button: 'delete-btn'
     };
-
     Common.modal(attr);
 });
 
 
+/*clone file upload*/
+$('.clone-fileupload').bind('click',function (event) {
+    $('.fileupload-wrap:first').clone().appendTo('.fileupload-container');
+});
 
 /*
 	select animation
@@ -32,11 +33,8 @@ $('.search-panel .dropdown-menu').find('a').click(function(e) {
 	$('.input-group #search_param').val(param);
 });
 
-
-
+/*delet event*/
 $(document.body).on('click', '.delete-btn' ,function(){
-
-//$('.delete-btn').bind('click',function () {
     Common.ajaxDelete(this);
 });
 
@@ -168,6 +166,7 @@ var Common = {
             }
         });
     }
+
 
 }
 

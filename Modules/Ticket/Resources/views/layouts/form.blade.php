@@ -1,7 +1,7 @@
 <!--panel form-->
 <div class="panel-body" style="padding-top:0">
 	<!--form-->
-	<form class="form-horizontal" ticket="form" action="@if(isset($ticket)) {{ route('ticket.update' , ['id' => $ticket->id, 'department' => config('ticket.department') ] ) }} @else {{ route('ticket.store', ['department' => config('ticket.department')]) }} @endif" method="POST">
+	<form class="form-horizontal" enctype="multipart/form-data" ticket="form" action="@if(isset($ticket)) {{ route('ticket.update' , ['code' => $ticket->code, 'department' => config('ticket.department') ] ) }} @else {{ route('ticket.store', ['department' => config('ticket.department')]) }} @endif" method="POST">
 
 		<!--put this code for token-->
 	    {{ csrf_field() }}
@@ -34,6 +34,15 @@
 	    <div style="margin-bottom: 25px" class="input-group">
 	        <span class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"></i></span>
 	        <textarea rows="4" class="form-control" name="message" placeholder="Message" >@if(isset($ticket)){{ old('message', $ticket->message )}}@endif</textarea>
+	    </div>
+
+	    <!--fname input type-->
+	    <div style="margin-bottom: 25px" class="fileupload-container input-group">
+	    	<input type="button" class="clone-fileupload" value="Add more file to upload">
+	    	<div class="fileupload-wrap">
+	    		<input type="file" name="fileupload[]" class="fileupload" />
+	    	</div>
+	    	
 	    </div>
 	    
 
