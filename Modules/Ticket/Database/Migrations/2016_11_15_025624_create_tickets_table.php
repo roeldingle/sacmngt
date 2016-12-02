@@ -47,7 +47,7 @@ class CreateTicketsTable extends Migration
             $table->integer('status_id')->unsigned()->index();
             $table->foreign('status_id')->references('id')->on('ticket_status')->onDelete('cascade');
             $table->string('subject');
-            $table->string('message');
+            $table->longText('message');
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });

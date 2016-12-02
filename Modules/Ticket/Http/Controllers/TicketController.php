@@ -20,13 +20,11 @@ class TicketController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
 
-        $per_page = config('app.default_table_limit');
         $tickets = Auth::user()->ticket()->active()
         ->where('department_id',$request->department->id)
-        ->paginate($per_page);
+        ->paginate(config('app.default_table_limit'));
 
         return view('ticket::index')
         ->with('search', (isset($search)) ? $search : 0)
@@ -45,8 +43,7 @@ class TicketController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
-    {
+    public function create(){
         return view('ticket::create');
     }
 
@@ -55,10 +52,7 @@ class TicketController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function store(Request $request)
-    {
-
-       $department_segment = $request->segment('2');
+    public function store(Request $request){
 
        $validator = Validator::make($request->all(), [
             'priority_id' => 'required',
@@ -73,35 +67,7 @@ class TicketController extends Controller
                 ->withErrors($validator);
         }
 
-        /*set data to insert*/
-        $ticket = new Ticket();
-        $ticket->code = ['prefix' => $department_segment, 'value' => time()];
-        $ticket->department_id = $request->department->id;
-        $ticket->priority_id = $request->input('priority_id');
-        $ticket->user_id = Auth::user()->id;
-        $ticket->subject = $request->input('subject');
-        $ticket->message = $request->input('message');
-        $ticket->status_id = 1;
-        $ticket->is_active = true;
-        $ticket->save();
-
-        /*upload and attach files if ther is any*/
-        if($request->hasFile('fileupload') && $request->file('fileupload')[0] != ''){
-            foreach($request->file('fileupload') as $file) {
-                $filename = ($department_segment.'-'.md5(time())).'-'.$file->getClientOriginalName();
-                $path = base_path().'/public/uploads/';
-                $file->move($path, $filename);
-
-                /*insert attachment data*/
-                $attachment = new Attachment;
-                $attachment->ticket_id = $ticket->id;
-                $attachment->type = $file->getClientOriginalName();
-                $attachment->path = $file->getPathname();
-                $attachment->save();
-
-            }
-        }
-
+        $ticket = Ticket::saveTicket($request);
 
         if($ticket){
             return redirect()
@@ -115,8 +81,7 @@ class TicketController extends Controller
      * Show the form for editing the specified resource.
      * @return Response
      */
-    public function edit(Request $request, $code)
-    {
+    public function edit(Request $request, $code){
 
       $ticket = $request->department->ticket->where('code',$code)->first();
 
@@ -131,8 +96,6 @@ class TicketController extends Controller
      */
     public function update(Request $request, $code){
 
-        $ticket = Ticket::active()->where('code', $code)->first();
-
         $validator = Validator::make($request->all(), [
             'priority_id' => 'required',
             'subject' => 'required|min:2',
@@ -144,18 +107,9 @@ class TicketController extends Controller
                 ->route('ticket.edit',['code' => $ticket->code])
                 ->withErrors($validator);
         }
-
         
-        $ticket->department_id = $request->department->id;
-        $ticket->priority_id = $request->input('priority_id');
-        $ticket->user_id = Auth::user()->id;
-        $ticket->subject = $request->input('subject');
-        $ticket->message = $request->input('message');
-        $ticket->status_id = 1;
-        $ticket->is_active = true;
-        $ticket->save();
+        $ticket = Ticket::saveTicket($request, $code);
 
-        
         if($ticket){
             return redirect()
             ->route('ticket.edit',['code' => $ticket->code])
@@ -188,29 +142,7 @@ class TicketController extends Controller
     }
 
 
-    /**
-     *  Store Files
-     *
-     * @return Redirect
-     */
-    public function _storeFiles($prefix,$files)
-    {
-
-
-      //If the array is not empty
-      if ($files[0] != '') {
-        foreach($files as $file) {
-          // Set the destination path
-          $destinationPath = 'uploads';
-          // Get the orginal filname or create the filename of your choice
-          $filename = ($prefix.'-'.md5(time())).'-'.$file->getClientOriginalName();
-          // Copy the file in our upload folder
-          $uploaded = $file->move($destinationPath, $filename);
-        }
-      }
-      // Retrun a redirection or a view 
-      return $files;
-    }
+    
 
 
 }

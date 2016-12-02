@@ -24,22 +24,32 @@
                                             <small class="text-muted">{{ Carbon\Carbon::parse($ticket->created_at)->toDayDateTimeString() }}</small>
                                         </span>
 
-                                        <h4 class="text-success">
+                                        <h4 class="text-primary">
                                             {{ $ticket->subject }}  <br />
-                                            <small class="text-info">#{{ $ticket->code }}</small> <br />
-                                            <small class="text-warning">Priority: {{ $ticket->priority->name }}</small>
+                                            <small class="text-info" style="font-size:12px">Ticket Code: {{ $ticket->code }}</small> <br />
+                                            <small class="text-danger" style="font-size:12px">Priority: {{ $ticket->priority->name }}</small>
                                         </h4>
-                                        <div class="ticket-content">
-                                            <p>{{ $ticket->message }}</p>
+                                        <div class="ticket-content" style="padding:10px">
+                                            <p>{!! $ticket->message !!}</p>
 
                                         </div>
                                         
-                                        <p>
-                                            
-                                            <span class="btn btn-sm btn-success pull-right">
-                                                {{$ticket->status->name}}
-                                            </span>
-                                        </p>
+                                    </div>
+
+                                    <div class="media-footer">
+                                        <div class="attachment-container">
+                                            <p>({{ count($ticket->attachments)}}) Attachments</p>
+                                            @foreach($ticket->attachments as $attachment)
+                                                <div class="attachment-item pull-left">
+                                                    <a href="{{ asset($attachment->path) }}" target="_blank" class="attachment-link" alt="{{ $attachment->name }}" title="{{ $attachment->name }}" >{!! $attachment->displayAttachmentPreview() !!}</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+
+                                        <span class="btn btn-sm btn-success pull-right">
+                                            {{$ticket->status->name}}
+                                        </span>
+                                        
                                     </div>
                                 </div>
 
@@ -62,7 +72,7 @@
                                         </span>
                                         <strong class="text-success">{{$reply->user->setMeta()->fname}} {{$reply->user->setMeta()->lname}}</strong>
                                         <p>
-                                            {{$reply->message}}
+                                            {!! $reply->message !!}
                                         </p>
                                     </div>
                                 </li>
@@ -99,3 +109,21 @@
 </div>
 
 <!--/panel body-->
+
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script type="text/javascript">
+    tinymce.init({
+      selector: 'textarea',
+      height: 200,
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+      ],
+      toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      content_css: '//www.tinymce.com/css/codepen.min.css'
+    });
+
+
+</script>

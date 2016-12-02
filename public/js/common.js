@@ -18,9 +18,14 @@ $('#delete-btn').bind('click',function (event) {
 
 
 /*clone file upload*/
-$('.clone-fileupload').bind('click',function (event) {
-    $('.fileupload-wrap:first').clone().appendTo('.fileupload-container');
+
+$('.add-fileupload').bind('click', function(){
+    var filehtml = '<input type="file" name="fileupload[]" class="fileupload" style="margin-bottom:5px" />';
+
+    $('.fileupload-container').append(filehtml);
+   
 });
+
 
 /*
 	select animation

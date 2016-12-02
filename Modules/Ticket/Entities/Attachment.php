@@ -22,4 +22,31 @@ class Attachment extends Model
         ->where('is_active', 1);
     }
 
+
+     /*
+        display attachement preview
+    */
+    public function displayAttachmentPreview(){
+
+
+        $filename = explode('.',$this->name);
+        $extension = strtolower($filename[1]);
+
+        $image_extensions = ['jpg','png','gif', 'jpeg'];
+        $worddoc_extensions = ['doc','docx'];
+        $pdf_extensions = ['pdf'];
+
+        /*check if image*/
+        if(in_array($extension, $image_extensions)){
+            $preview = '<i class="fa fa-file-image-o fa-3" aria-hidden="true"></i>';
+        }else if(in_array($extension, $worddoc_extensions)){
+            $preview = '<i class="fa fa-file-word-o fa-3" aria-hidden="true"></i>';
+        }else if(in_array($extension, $pdf_extensions)){
+            $preview = '<i class="fa fa-file-pdf-o fa-3" aria-hidden="true"></i>';
+        }else{
+            $preview = '<i class="fa fa-file-o fa-3" aria-hidden="true"></i>';
+        }
+
+        return $preview;
+    }
 }

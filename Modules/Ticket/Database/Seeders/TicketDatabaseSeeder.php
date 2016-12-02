@@ -48,20 +48,20 @@ class TicketDatabaseSeeder extends Seeder
     public function createTicketStatus(){
 
         $status = new Status();
-        $status->name = 'open';
-        $status->description = 'Open status';
+        $status->name = 'Open';
+        $status->description = 'submitted ticket';
         $status->is_active = true;
         $status->save();
 
         $status = new Status();
-        $status->name = 'pending';
-        $status->description = 'Open status';
+        $status->name = 'On-process';
+        $status->description = 'ticket is in ongoing process';
         $status->is_active = true;
         $status->save();
 
         $status = new Status();
-        $status->name = 'close';
-        $status->description = 'Open status';
+        $status->name = 'Close';
+        $status->description = 'ticket close and done';
         $status->is_active = true;
         $status->save();
 
@@ -70,20 +70,20 @@ class TicketDatabaseSeeder extends Seeder
     public function createTicketSPriority(){
 
         $priority = new Priority();
-        $priority->name = 'low';
-        $priority->description = 'Open status';
+        $priority->name = 'Low';
+        $priority->description = '';
         $priority->is_active = true;
         $priority->save();
 
         $priority = new Priority();
-        $priority->name = 'medium';
-        $priority->description = 'Open status';
+        $priority->name = 'Medium';
+        $priority->description = '';
         $priority->is_active = true;
         $priority->save();
 
         $priority = new Priority();
-        $priority->name = 'high';
-        $priority->description = 'Open status';
+        $priority->name = 'High';
+        $priority->description = '';
         $priority->is_active = true;
         $priority->save();
     }

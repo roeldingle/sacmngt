@@ -18,7 +18,7 @@ class CreateRepliesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('ticket_id')->unsigned()->index();
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
-            $table->string('message');
+            $table->longText('message');
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });

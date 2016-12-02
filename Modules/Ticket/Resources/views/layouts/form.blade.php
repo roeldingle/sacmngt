@@ -31,18 +31,30 @@
 	    <!--//email input type-->
 
 	    <!--fname input type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"></i></span>
+	    <div style="margin-bottom: 25px">
+	    	<!-- <span class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true"></i></span> -->
 	        <textarea rows="4" class="form-control" name="message" placeholder="Message" >@if(isset($ticket)){{ old('message', $ticket->message )}}@endif</textarea>
 	    </div>
 
-	    <!--fname input type-->
-	    <div style="margin-bottom: 25px" class="fileupload-container input-group">
-	    	<input type="button" class="clone-fileupload" value="Add more file to upload">
+	    <!--fileupload type-->
+	    @if(isset($ticket))
+	    <div style="margin-bottom: 25px" class="input-group">
+            <div class="attachment-container">
+                <p>({{ count($ticket->attachments)}}) Attachments</p>
+                @foreach($ticket->attachments as $attachment)
+                    <div class="attachment-item pull-left">
+                        <a href="{{ asset($attachment->path) }}" target="_blank" class="attachment-link" alt="{{ $attachment->name }}" title="{{ $attachment->name }}" >{!! $attachment->displayAttachmentPreview() !!}</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+	    @endif
+	    
+	    <div style="margin-bottom: 25px" class="fileupload-container well input-group">
+	    	<label for="files">Select Attachments</label><a href="javascript:void(0)" class="add-fileupload" >Add attachments</a>
 	    	<div class="fileupload-wrap">
-	    		<input type="file" name="fileupload[]" class="fileupload" />
+	    		<input type="file" name="fileupload[]" class="fileupload" style="margin-bottom:5px" />
 	    	</div>
-	    	
 	    </div>
 	    
 
@@ -62,5 +74,22 @@
 	<!--//form-->
 </div>
 <!--/panel form-->
+
+
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+  selector: 'textarea',
+  height: 200,
+  menubar: false,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table contextmenu paste code'
+  ],
+  toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  content_css: '//www.tinymce.com/css/codepen.min.css'
+});
+</script>
 
 
