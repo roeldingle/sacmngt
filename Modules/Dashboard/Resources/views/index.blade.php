@@ -13,7 +13,7 @@
 
 <!--center part contains main content-->
 @section('content-center')
-  @include('main.alert')
+@include('main.alert')
   <!--center-->
    <div class="well"> 
        <form class="form-horizontal" role="form">

@@ -17,10 +17,10 @@
   <!--panel-->
   <div class="panel panel-default">
     <!--panel header-->
-    @include('ticket::layouts.header', ['title' => 'Ticket code : ' . $ticket->code ])
+    @include('ticket::layouts.header', ['title' => 'Edit ticket'])
     <!--//panel header-->
     <!--panel body-->
-     @include('ticket::layouts.card')
+     @include('ticket::layouts.form')
     <!--//panel body-->
     
   </div>

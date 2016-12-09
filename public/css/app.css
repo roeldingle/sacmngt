@@ -7,5 +7,15 @@ table{font-size:12px;}
 .attachment-item {padding:5px}
 .attachment-item .attachment-link i.fa{font-size: 30px;}
 
+/*reply*/
+.reply-container .media-list li {padding:10px;border:1px solid #eaeaea;border-radius: 3px;}
+
+
+/*button*/
+#status-dropdown.btn-primary .btn-status-text,
+#status-dropdown.btn-info .btn-status-text {color:#fff;}
+#status-dropdown.btn-default .btn-status-text {color:#000;}
+
+
 
 

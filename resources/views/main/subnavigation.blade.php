@@ -14,24 +14,25 @@
               <a href="/ticket/it">IT Support</a>
              </li>
 
-             <li class="">
+             <!-- <li class="">
               <a href="/ticket/hr">HR Support</a>
-             </li>
+             </li> -->
+
+             @if(Auth::user()->role->id == 7 || Auth::user()->role->id == 1)
 
              <li class="">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   IT Management <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
-                  <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
-                  <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
-                  <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
-                  <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
+                  <li><a href="/support/it">Staff Management</a></li>
+                  <li><a href="/support/it">Ticket Support</a></li>
                 </ul>
              </li>
 
-             <li class="">
+             @endif()
+
+            <!--  <li class="">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   HR Management <span class="caret"></span>
                 </a>
@@ -42,8 +43,8 @@
                   <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
                   <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
                 </ul>
-             </li>
-
+             </li> -->
+             @if(Auth::user()->role->id == 1 )
              <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 System Settings <span class="caret"></span>
@@ -53,6 +54,7 @@
                   <li><a href="/role"><i class="fa fa-address-card-o" aria-hidden="true"></i> &nbsp;Roles</a></li>
                 </ul>
             </li>
+            @endif()
 
            </ul>
         </div>	

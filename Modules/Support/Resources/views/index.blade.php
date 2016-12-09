@@ -16,12 +16,15 @@
   @include('main.alert')
   <!--panel-->
   <div class="panel panel-default">
-    <!--panel header-->
-    @include('ticket::layouts.header', ['title' => 'Ticket code : ' . $ticket->code ])
+    <!--panel header (pass title, create_btn is display Create new button)-->
+    @include('support::layouts.header', ['title' => 'Ticket List']) 
     <!--//panel header-->
-    <!--panel body-->
-     @include('ticket::layouts.card')
+     <!--panel body-->
+    @include('support::layouts.table')
     <!--//panel body-->
+    <!--panel footer-->
+    @include('ticket::layouts.footer')
+  <!--//panel footer-->
     
   </div>
   <!--//panel-->

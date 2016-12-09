@@ -1,6 +1,8 @@
 /*
-    onload eventsdfdf
+    onload events
 */
+
+/********** check all checkbox in table**************/
 $('input[name="checkall"]').bind('click',function () {
     $('input[type="checkbox"]').prop("checked", $(this).prop("checked"));
 });
@@ -16,20 +18,40 @@ $('#delete-btn').bind('click',function (event) {
     Common.modal(attr);
 });
 
+/********** status selection on ticket view**************/
+$('.status-selection').bind('click',function () {
+    var selected = $(this);
+    var selected_status = selected.attr('data-status');
+    var selected_text = selected.text();
 
-/*clone file upload*/
+    switch(selected_status){
+        case 1:
+            var selected_class = 'btn-primary';
+        case 2:
+            var selected_class = 'btn-info';
+        break;
+        case 3:
+            var selected_class = 'btn-default';
+        break;
+    }
 
-$('.add-fileupload').bind('click', function(){
-    var filehtml = '<input type="file" name="fileupload[]" class="fileupload" style="margin-bottom:5px" />';
+    $('#status-dropdown').removeClass('btn-primary btn-info btn-default').addClass(selected_class);
+    $("#status-dropdown .btn-status-text").text(selected_text);
 
-    $('.fileupload-container').append(filehtml);
-   
+    /*update ticket status*/
+    Common.ajaxUpdateTicketStatus(selected_status);
+    
 });
 
 
-/*
-	select animation
-*/
+/********** clone anothe file input for attachments**************/
+$('.add-fileupload').bind('click', function(){
+    var filehtml = '<input type="file" name="fileupload[]" class="fileupload" style="margin-bottom:5px" />';
+    $('.fileupload-container').append(filehtml);
+});
+
+
+/**********  select input animation**************/
 $('.search-panel .dropdown-menu').find('a').click(function(e) {
 	e.preventDefault();
 	var param = $(this).attr("href").replace("#","");
@@ -38,13 +60,10 @@ $('.search-panel .dropdown-menu').find('a').click(function(e) {
 	$('.input-group #search_param').val(param);
 });
 
-/*delet event*/
+/********** ajax delete selected items**************/
 $(document.body).on('click', '.delete-btn' ,function(){
     Common.ajaxDelete(this);
 });
-
-
-
 
 
 /*
@@ -70,6 +89,24 @@ var Common = {
                 success: function(data) {
                     //if something was deleted, we redirect the user to the users page, and automatically the user that he deleted will disappear
                     if (data.affectedRows > 0) window.location = data.redirect;
+                }
+            });
+    },
+
+    ajaxUpdateTicketStatus: function(selected_status){
+
+            var token = $('input[name="_token"]').val();
+            var id = $("#status-dropdown").attr('data-ticket');
+            var route = $("#current_url").val();
+
+            $.ajax({
+                type: 'POST',
+                data: {_token :token, id: id,status: selected_status,return_route: route},
+                url: route+'/ajaxupdatestatus', //resource
+                success: function(data) {
+                    console.log(data);
+                    //if something was deleted, we redirect the user to the users page, and automatically the user that he deleted will disappear
+                    if (data.updated == 1) window.location = data.redirect;
                 }
             });
     },

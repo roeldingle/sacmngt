@@ -17,10 +17,10 @@
   <!--panel-->
   <div class="panel panel-default">
     <!--panel header-->
-    @include('ticket::layouts.header', ['title' => 'Ticket code : ' . $ticket->code ])
+    @include('support::layouts.header', ['title' => 'Ticket code : ' . $ticket->code ])
     <!--//panel header-->
     <!--panel body-->
-     @include('ticket::layouts.card')
+     @include('support::layouts.card')
     <!--//panel body-->
     
   </div>

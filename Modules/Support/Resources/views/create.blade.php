@@ -1,9 +1,10 @@
 @extends('main.two-column-master')
 
-<!--main header part-->
-@include('main.navigation')
-@include('main.subnavigation')
-<!--//main header part-->
+    <!--main header part-->
+    @include('main.navigation')
+    @include('main.subnavigation')
+    <!--//main header part-->
+
 
 <!--left part contains profile-->
 @section('content-left')
@@ -17,13 +18,14 @@
   <!--panel-->
   <div class="panel panel-default">
     <!--panel header-->
-    @include('ticket::layouts.header', ['title' => 'Ticket code : ' . $ticket->code ])
+    @include('ticket::layouts.header', ['title' => 'Create ticket'])
     <!--//panel header-->
     <!--panel body-->
-     @include('ticket::layouts.card')
+     @include('ticket::layouts.form')
     <!--//panel body-->
     
   </div>
   <!--//panel-->
 @stop
 <!--//center part contains main content-->
+

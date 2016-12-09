@@ -12,10 +12,7 @@ use Auth;
 
 class Ticket extends Model
 {
-    protected $fillable = ['user_id','department_id','priority_level','subject', 'message', 'status', 'is_active'];
-
-
-    
+    protected $fillable = ['user_id','department_id','priority_level', 'status_id', 'subject', 'message', 'is_active'];
 
     /**
      * Always capitalize the first name when we save it to the database
