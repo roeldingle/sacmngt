@@ -1,59 +1,86 @@
 <!--panel form-->
-<div class="panel-body" style="padding-top:0">
+<div class="panel-body" style="padding:30px">
 	<!--form-->
 	<form class="form-horizontal" enctype="multipart/form-data" ticket="form" action="@if(isset($ticket)) {{ route('ticket.update' , ['code' => $ticket->code, 'department' => config('ticket.department') ] ) }} @else {{ route('ticket.store', ['department' => config('ticket.department')]) }} @endif" method="POST">
 
 		<!--put this code for token-->
 	    {{ csrf_field() }}
 
-	    <!--user priority_level select type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	  		
-			  <span class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true"></i></span>
+	    <!--user list type-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="role">User :</label>
+			  <select name="user_id" class="form-control">
+
+			  	@foreach(Modules\User\Entities\User::active()->get() as $val)
+			  		<option value="{{ $val->id }}"  @if(isset($ticket) && $ticket->id == $val->id) selected @endif>{{ $val->setMeta()->fname }} {{ $val->setMeta()->lname }}</option>
+			  	@endforeach
+			  </select>
+	    	</div>
+	    </div>
+
+	    <!--priority list type-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="role">Priority Level :</label>
 			  <select name="priority_id" class="form-control">
 
 			  	@foreach(Modules\Ticket\Entities\Priority::active()->get() as $val)
 			  		<option value="{{ $val->id }}"  @if(isset($ticket) && $ticket->priority_id == $val->id) selected @endif>{{ $val->name }}</option>
 			  	@endforeach
 			  </select>
+	    	</div>
+	    </div>
 
-			  
-			
-		</div>
-	    <!--//user role select type-->
+
+	    <!--subject-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="subject">Subject :</label>
+			  <input type="text" class="form-control" name="subject" value="@if(isset($ticket)){{ old('subject', $ticket->subject) }}@endif" placeholder="Subject">
+	    	</div>
+	    </div>
+
+	    <!--message-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="message">Message :</label>
+			   <textarea rows="4" class="form-control" name="message" placeholder="Message" >@if(isset($ticket)){{ old('message', $ticket->message )}}@endif</textarea>
+	    	</div>
+	    </div>
 	    
-
-	    <!--email input type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true"></i></span>
-	        <input type="text" class="form-control" name="subject" value="@if(isset($ticket)){{ old('subject', $ticket->subject) }}@endif" placeholder="Subject">
-	    </div>
-	    <!--//email input type-->
-
-	    <!--fname input type-->
-	    <div style="margin-bottom: 25px">
-	    	<!-- <span class="input-group-addon"><i class="fa fa-address-card-o" aria-hidden="true"></i></span> -->
-	        <textarea rows="4" class="form-control" name="message" placeholder="Message" >@if(isset($ticket)){{ old('message', $ticket->message )}}@endif</textarea>
-	    </div>
 
 	    <!--fileupload type-->
 	    @if(isset($ticket))
-	    <div style="margin-bottom: 25px" class="input-group">
-            <div class="attachment-container">
-                <p>({{ count($ticket->attachments)}}) Attachments</p>
-                @foreach($ticket->attachments as $attachment)
-                    <div class="attachment-item pull-left">
-                        <a href="{{ asset($attachment->path) }}" target="_blank" class="attachment-link" alt="{{ $attachment->name }}" title="{{ $attachment->name }}" >{!! $attachment->displayAttachmentPreview() !!}</a>
-                    </div>
-                @endforeach
-            </div>
-        </div>
+	    <!--message-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+				  <div class="attachment-container">
+	                <p>({{ count($ticket->attachments)}}) Attachments</p>
+	                @foreach($ticket->attachments as $attachment)
+	                    <div class="attachment-item pull-left">
+	                        <a href="{{ asset($attachment->path) }}" target="_blank" class="attachment-link" alt="{{ $attachment->name }}" title="{{ $attachment->name }}" >{!! $attachment->displayAttachmentPreview() !!}</a>
+	                    </div>
+	                @endforeach
+	            </div>
+	    	</div>
+	    </div>
 	    @endif
 	    
-	    <div style="margin-bottom: 25px" class="fileupload-container well input-group">
-	    	<label for="files">Select Attachments</label><a href="javascript:void(0)" class="add-fileupload" >Add attachments</a>
-	    	<div class="fileupload-wrap">
-	    		<input type="file" name="fileupload[]" class="fileupload" style="margin-bottom:5px" />
+
+	     <!--fileupload-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9 fileupload-container well input-group" style="padding: 20px;" >
+			 <label for="files">Select Attachments</label><a href="javascript:void(0)" class="add-fileupload" >Add attachments</a>
+		    	<div class="fileupload-wrap">
+		    		<input type="file" name="fileupload[]" class="fileupload" style="margin-bottom:5px" />
+		    	</div>
 	    	</div>
 	    </div>
 	    

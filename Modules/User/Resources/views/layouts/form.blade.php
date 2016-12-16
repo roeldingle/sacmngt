@@ -1,5 +1,5 @@
 <!--panel form-->
-<div class="panel-body" style="padding-top:0">
+<div class="panel-body" style="padding:30px">
 	<!--form-->
 	<form class="form-horizontal" role="form" action="@if(isset($user)) {{ route('user.update' , ['id' => $user->id] ) }} @else {{ route('user.store') }} @endif" method="POST">
 
@@ -7,60 +7,67 @@
 	    {{ csrf_field() }}
 	    
 	    <!--user role select type-->
-	  	<div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-cog" aria-hidden="true"></i></span>
-	      
-	        <div class="input-group  col-sm-6 col-md-6" style="padding-left: 0;">
-	            <div class="input-group-btn search-panel">
-	                <button type="button" style="width:100%;text-align: left;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-	                	<span id="search_concept" style="text-align:left">
-	                	  @if(isset($user))
-	                		 {{ old('role_id', $user->role->name) }}
-	            		  @else
-	            		   Select User Role 
-	            		  @endif
-	                	</span> 
-	                	<span class="caret pull-right"></span>
-	                </button>
-	                <ul class="dropdown-menu" role="menu" style="width:100%;text-align: left;">
-	                  <li><a href="#1">Superadmin</a></li>
-	                  <li><a href="#2">Admin</a></li>
-	                  <li><a href="#3">Staff</a></li>
-	                  <li><a href="#4">User</a></li>
-	                </ul>
-	            </div>
-	            <input type="hidden" name="role_id" value="@if(isset($user)){{ old('role_id', $user->role_id) }}@endif"  id="search_param">         
-	        </div>
-	    </div>
-	    <!--//user role select type-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="role">Role :</label>
+			  <select class="form-control" id="role" name="role_id" value="@if(isset($user)){{ old('role_id', $user->role_id) }}@endif">
 
-	    <!--email input type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-	        <input type="text" class="form-control" name="email" value="@if(isset($user)){{ old('email', $user->email) }}@endif" placeholder="Email Address">
+		    		@foreach(\Modules\Role\Entities\Role::active()->get() as $role)
+		        		<option value="{{ $role->id }}" @if(isset($user) && $user->role_id == $role->id){{ "selected" }}@endif >{{ $role->name }}</option>
+		        	@endforeach
+		    	</select>
+	    	</div>
 	    </div>
-	    <!--//email input type-->
 
-	    <!--fname input type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-	        <input type="text" class="form-control" name="fname" value="@if(isset($user)){{ old('fname', $user->setMeta()->fname)}}@endif" placeholder="First name">
+	    <!--user role select type-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="department">Department :</label>
+			  <select class="form-control" id="department" name="department_id" value="@if(isset($user)){{ old('role_id', $user->role_id) }}@endif">
+			  		@foreach(\Modules\Ticket\Entities\Department::active()->get() as $department)
+                		<option value="{{ $department->id }}" @if(isset($user) && $user->department_id == $department->id){{ "selected" }}@endif >{{ $department->description }}</option>
+                	@endforeach
+		    	</select>
+	    	</div>
 	    </div>
-	    <!--//fname input type-->
 
-	    <!--lname input type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-	        <input type="text" class="form-control" name="lname" value="@if(isset($user)){{ old('lname', $user->setMeta()->lname) }}@endif" placeholder="Last name">
+	    <!--user email-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="department">Email Address :</label>
+			  <input type="text" class="form-control" name="email" value="@if(isset($user)){{ old('email', $user->email) }}@endif" placeholder="Email Address">
+	    	</div>
 	    </div>
-	    <!--//lname input type-->
 
-	    <!--avatar input type-->
-	    <div style="margin-bottom: 25px" class="input-group">
-	        <span class="input-group-addon"><i class="fa fa-photo" aria-hidden="true"></i></span>
-	        <input type="text" class="form-control" name="avatar" value="@if(isset($user)){{ old('avatar', $user->setMeta()->avatar)}}@endif" placeholder="Paste Avatar here">
+	    <!--user fname-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="department">First name :</label>
+			  <input type="text" class="form-control" name="fname" value="@if(isset($user)){{ old('fname', $user->setMeta()->fname)}}@endif" placeholder="First name">
+	    	</div>
 	    </div>
-	    <!--//avatar input type-->
+
+	    <!--user lname-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="department">Last name :</label>
+			  <input type="text" class="form-control" name="lname" value="@if(isset($user)){{ old('lname', $user->setMeta()->lname) }}@endif" placeholder="Last name">
+	    	</div>
+	    </div>
+
+	    <!--user avatar-->
+	    <div class="form-group">
+	    	<div class="col-sm-1 col-md-1"></div>
+	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
+			  <label for="department">Avatar :</label>
+			  <input type="text" class="form-control" name="avatar" value="@if(isset($user)){{ old('avatar', $user->setMeta()->avatar)}}@endif" placeholder="Paste Avatar here">
+	    	</div>
+	    </div>
 
 	    <hr />
 

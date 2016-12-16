@@ -17,6 +17,7 @@ class RegistrationController extends Controller
      */
     public function index()
     {
+
         return view('registration::index');
     }
 
@@ -26,6 +27,7 @@ class RegistrationController extends Controller
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',
+            'department_id' => 'required',
             'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
             'fname' => 'required|min:2',
             'lname' => 'required|min:2',
@@ -43,6 +45,7 @@ class RegistrationController extends Controller
 
         if($created){
             return redirect('login')
+            ->with('user',$created)
             ->with('info','New user created successfully!');
         }
 

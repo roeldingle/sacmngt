@@ -27,7 +27,7 @@
 			      	<td>{{ $row->code }}</td>
 			        <td>{{ $row->subject }}</td>
 			        <td>{{ $row->status->name }}</td>
-			        <td>{{ Carbon\Carbon::parse($row->created_at)->toDayDateTimeString() }}</td>
+			        <td>{{ Carbon\Carbon::parse($row->created_at)->format('m/d/Y') }}</td>
 			        <td>{{ Carbon\Carbon::parse($row->updated_at)->diffForHumans() }}</td>
 			        <td class="" style="text-align:center">
 			      	<a href="{{ route( 'ticket.show', ['id' => $row->code] ) }}"><i class="fa fa-window-maximize" aria-hidden="true"></i></a> |

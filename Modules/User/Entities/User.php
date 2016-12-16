@@ -10,7 +10,6 @@ use Modules\User\Entities\Meta;
 use Module;
 use Config;
 
-
 class User extends Authenticatable
 {
     use Notifiable;
@@ -41,32 +40,35 @@ class User extends Authenticatable
 	/*
 		Users meta relationship
 	*/
-	public function meta()
-    {
+	public function meta(){
         return $this->hasMany('Modules\User\Entities\Meta');
     }
 
     /*
 		Users role
 	*/
-	public function role()
-    {
+	public function role(){
         return $this->belongsTo('Modules\Role\Entities\Role');
+    }
+
+    /*
+        Users role
+    */
+    public function department(){
+        return $this->belongsTo('Modules\Ticket\Entities\Department');
     }
 
     /*
         Users ticket
     */
-    public function ticket()
-    {
+    public function ticket(){
         return $this->hasMany('Modules\Ticket\Entities\Ticket', 'user_id');
     }
 
     /*
 		get active users
 	*/
-    public function scopeActive($query)
-    {
+    public function scopeActive($query){
         return $query->where('is_active', 1);
     }
 
@@ -80,6 +82,7 @@ class User extends Authenticatable
 
 	 	$user = new User();
         $user->role_id = $input['role_id'];
+        $user->department_id = $input['department_id'];
         $user->email = $input['email'];
         $user->password = isset($input['password']) ? bcrypt($input['password']) : bcrypt($default_password);
         $user->is_active = true;
@@ -112,6 +115,7 @@ class User extends Authenticatable
     public static function editUser($input, $user){
 
         $user->role_id = $input['role_id'];
+        $user->department_id = $input['department_id'];
         $user->email = $input['email'];
         $user->is_active = true;
         $userSaved = $user->save();
@@ -148,7 +152,7 @@ class User extends Authenticatable
 
 
     /*
-		function to save users and there meta
+		function to set/get user meta
 	*/
     public function setMeta(){
 
@@ -163,7 +167,7 @@ class User extends Authenticatable
     }
 
      /*
-		function to save users and there meta
+		function to get user serach
 	*/
     public static function getUserSearch($request){
 
@@ -212,10 +216,6 @@ class User extends Authenticatable
 
         return $users;
     }
-
-
-     
-
 
 
 }

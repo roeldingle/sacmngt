@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 use Auth;
 use Modules\User\Entities\User;
 use Modules\User\Entities\Meta;
+use Modules\Ticket\Entities\Department;
+use Modules\Role\Entities\Role;
 use Module;
 use Validator;
 
@@ -85,8 +87,9 @@ class UserController extends Controller
     public function edit($id)
     {
       $user = User::findOrFail($id);
-
         return view('user::edit')
+        ->with('department', Department::all())
+        ->with('role', Role::all())
         ->with('user', $user);
     }
 

@@ -18,10 +18,10 @@
   <!--panel-->
   <div class="panel panel-default">
     <!--panel header-->
-    @include('ticket::layouts.header', ['title' => 'Create ticket'])
+    @include('support::layouts.header', ['title' => 'Create ticket'])
     <!--//panel header-->
     <!--panel body-->
-     @include('ticket::layouts.form')
+     @include('support::layouts.form')
     <!--//panel body-->
     
   </div>

@@ -17,7 +17,7 @@
   <!--panel-->
   <div class="panel panel-default">
     <!--panel header (pass title, create_btn is display Create new button)-->
-    @include('support::layouts.header', ['title' => 'Ticket List']) 
+    @include('support::layouts.header', ['title' => 'Ticket List', 'create_btn' => true]) 
     <!--//panel header-->
      <!--panel body-->
     @include('support::layouts.table')

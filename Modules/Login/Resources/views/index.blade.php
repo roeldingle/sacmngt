@@ -17,7 +17,7 @@
                     
                 </div>     
 
-                <div style="padding-top:30px" class="panel-body" >
+                <div style="padding:30px" class="panel-body" >
 
 
                     @include('main.alert')
@@ -26,18 +26,24 @@
                     <form id="loginform" class="form-horizontal" role="form" action="/login" method="POST">
 
                         {{ csrf_field() }}
-                                
-                        <div style="margin-bottom: 25px" class="input-group">
+
+                        <!--user email-->
+                        <div class="form-group">
                             
-                            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" value="" placeholder="Email" required>                                        
-                        </div>
-                            
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <div class="col-sm-12 col-md-12" style="padding-left: 0;">
+                              <label for="email">Email Address :</label>
+                              <input type="text" class="form-control" name="email" value="@if(isset($user)){{ old('email', $user->email)}}@endif" placeholder="Email" required>  
+                            </div>
                         </div>
 
+                        <!--user email-->
+                        <div class="form-group">
+                            <div class="col-sm-12 col-md-12" style="padding-left: 0;">
+                              <label for="password">Password :</label>
+                              <input type="password" class="form-control" name="password" placeholder="Password" value="" required>
+                            </div>
+                        </div>
+                                
                             
                         <div class="input-group">
                           <div class="checkbox">

@@ -52,7 +52,6 @@ class CreateTicketsTable extends Migration
             $table->timestamps();
         });
 
-        
     }
 
     /**
