@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Support\Http\Middleware;
+namespace Modules\Ticket\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 
 use Modules\Ticket\Entities\Ticket;
-use Modules\Ticket\Entities\Department;
+use Modules\User\Entities\Department;
 use Auth;
 
 class SupportMiddleware

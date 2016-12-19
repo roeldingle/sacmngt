@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 use Modules\Ticket\Entities\Ticket;
-use Modules\Ticket\Entities\Department;
+use Modules\User\Entities\Department;
 use Auth;
 
 class TicketMiddleware
@@ -22,7 +22,9 @@ class TicketMiddleware
     {
         
         $department_segment = $request->segment('2');
+
         $request->department = Department::active()->where('name', strtolower($department_segment))->first();
+
 
         if($request->department !== null){
 
@@ -49,7 +51,8 @@ class TicketMiddleware
             }
 
         }else{
-            return abort(404, 'Page not found.');
+            //return abort(404, 'Page not found.');
+            return $next($request);
         }
 
         

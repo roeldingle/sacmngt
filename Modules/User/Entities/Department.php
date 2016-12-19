@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Ticket\Entities;
+namespace Modules\User\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 

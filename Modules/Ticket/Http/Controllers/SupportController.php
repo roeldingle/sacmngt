@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Modules\Support\Http\Controllers;
+namespace Modules\Ticket\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -28,7 +28,7 @@ class SupportController extends Controller
         ->paginate(config('app.default_table_limit'));
 
 
-        return view('support::index')
+        return view('ticket::index')
         ->with('search', (isset($search)) ? $search : 0)
         ->with('tickets',$tickets);
     }
@@ -37,7 +37,7 @@ class SupportController extends Controller
 
         $ticket = $request->department->ticket->where('code',$code)->first();
 
-        return view('support::show')
+        return view('ticket::show')
         ->with('ticket', $ticket);
     }
 
@@ -46,7 +46,7 @@ class SupportController extends Controller
      * @return Response
      */
     public function create(){
-        return view('support::create');
+        return view('ticket::create');
     }
 
     /**
@@ -87,7 +87,7 @@ class SupportController extends Controller
 
       $ticket = $request->department->ticket->where('code',$code)->first();
 
-        return view('support::edit')
+        return view('ticket::edit')
         ->with('ticket', $ticket);
     }
 
@@ -145,7 +145,7 @@ class SupportController extends Controller
 
     public function ajaxUpdateStatus(Request $request){
 
-        $values = array('status_id'=> $request->status);
+        $values = array('status_id'=> $request->status, 'staff_filed' => Auth::user()->id);
        
         $updated = Ticket::findOrFail($request->id)->update($values);
 

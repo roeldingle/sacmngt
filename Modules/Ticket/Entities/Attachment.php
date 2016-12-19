@@ -30,7 +30,8 @@ class Attachment extends Model
 
 
         $filename = explode('.',$this->name);
-        $extension = strtolower($filename[1]);
+
+        $extension = (isset($filename[1])) ? strtolower($filename[1]) : 'txt';
 
         $image_extensions = ['jpg','png','gif', 'jpeg'];
         $worddoc_extensions = ['doc','docx'];

@@ -13,13 +13,7 @@ class CreateTicketsTable extends Migration
     public function up()
     {
 
-        Schema::create('departments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->boolean('is_active')->default(1);
-        });
-
+        
         Schema::create('ticket_priority', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -48,6 +42,7 @@ class CreateTicketsTable extends Migration
             $table->foreign('status_id')->references('id')->on('ticket_status')->onDelete('cascade');
             $table->string('subject');
             $table->longText('message');
+            $table->integer('staff_filed')->default(0);
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
@@ -64,10 +59,6 @@ class CreateTicketsTable extends Migration
         Schema::dropIfExists('tickets');
         Schema::dropIfExists('ticket_status');
         Schema::dropIfExists('ticket_priority');
-        Schema::dropIfExists('departments');
-        
-        
-        
         
     }
 }

@@ -141,8 +141,4 @@ class TicketController extends Controller
         
     }
 
-
-    
-
-
 }

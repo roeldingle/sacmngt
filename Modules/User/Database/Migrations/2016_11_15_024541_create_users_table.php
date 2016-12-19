@@ -12,6 +12,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+
+        Schema::create('departments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('description');
+            $table->boolean('is_active')->default(1);
+        });
+
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->unsigned();
@@ -44,6 +53,7 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('meta_user');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('departments');
         
     }
 }

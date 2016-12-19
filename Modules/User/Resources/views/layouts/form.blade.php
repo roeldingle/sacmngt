@@ -26,7 +26,7 @@
 	    	<div class="col-sm-9 col-md-9" style="padding-left: 0;">
 			  <label for="department">Department :</label>
 			  <select class="form-control" id="department" name="department_id" value="@if(isset($user)){{ old('role_id', $user->role_id) }}@endif">
-			  		@foreach(\Modules\Ticket\Entities\Department::active()->get() as $department)
+			  		@foreach(\Modules\User\Entities\Department::active()->get() as $department)
                 		<option value="{{ $department->id }}" @if(isset($user) && $user->department_id == $department->id){{ "selected" }}@endif >{{ $department->description }}</option>
                 	@endforeach
 		    	</select>

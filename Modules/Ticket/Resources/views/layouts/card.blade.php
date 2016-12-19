@@ -7,7 +7,6 @@
 			<!--row_count_container-->
 			<div class="col-sm-10">
 
-
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="well well-sm">
                         <div class="row">
@@ -16,27 +15,48 @@
 
                                 <div class="media">
                                     <a href="#" class="pull-left">
-                                        
                                         <img src="{{ $ticket->user->setMeta()->avatar }}" alt="" class="img-thumbnail" style="width: 60px;">
                                     </a>
                                     <div class="media-body">
-                                        <span class="text-muted pull-right">
-                                            <small class="text-muted">{{ Carbon\Carbon::parse($ticket->created_at)->toDayDateTimeString() }}</small>
-                                        </span>
 
-                                        <h4 class="text-primary">
-                                            {{ $ticket->subject }}  <br />
-                                            <small class="text-info" style="font-size:12px">Ticket Code: {{ $ticket->code }}</small> <br />
-                                            <small class="text-danger" style="font-size:12px">Priority: {{ $ticket->priority->name }}</small>
-                                        </h4>
+                                        <h3 class="text-primary">
+                                            <div class="dropdown pull-right">
+                                                <?php
+                                                    switch($ticket->status->id){
+                                                        case 1: $btn_class="btn-primary"; break;
+                                                        case 2: $btn_class="btn-info"; break;
+                                                        case 3: $btn_class="btn-default"; break;
+                                                    }
+                                                ?>
+                                              @if(Auth::user()->role->id == 4)
+                                                <button id="status-dropdown" class="btn btn-sm {{ $btn_class }}" data-ticket="{{ $ticket->id }}" type="button" >
+                                                    <span class="btn-status-text">{{ $ticket->status->name }}</span>
+                                                </button>
+                                              @else
+                                                  <button id="status-dropdown" class="btn btn-sm dropdown-toggle {{ $btn_class }}" data-ticket="{{ $ticket->id }}" type="button" data-toggle="dropdown">
+                                                    <span class="btn-status-text">{{ $ticket->status->name }}</span>
+                                                  <span class="caret"></span></button>
+                                                  <ul class="dropdown-menu">
+                                                    <li><a href="#" class="status-selection" data-status="1">Open</a></li>
+                                                    <li><a href="#" class="status-selection" data-status="2">In-process</a></li>
+                                                    <li><a href="#" class="status-selection" data-status="3">Close</a></li>
+                                                  </ul>
+                                              @endif
+                                              
+                                            </div>
+
+                                            {{ $ticket->subject }} <br />
+                                            
+                                        </h3>
+                                        <!-- Example single danger button -->
                                         <div class="ticket-content" style="padding:10px">
                                             <p>{!! $ticket->message !!}</p>
-
                                         </div>
                                         
                                     </div>
 
-                                    <div class="media-footer">
+                                    <div class="media-footer col-sm-offset-1">
+                                        @if(!empty($ticket->attachments))
                                         <div class="attachment-container">
                                             <p>({{ count($ticket->attachments)}}) Attachments</p>
                                             @foreach($ticket->attachments as $attachment)
@@ -45,21 +65,20 @@
                                                 </div>
                                             @endforeach
                                         </div>
-
-                                        <span class="btn btn-sm btn-success pull-right">
-                                            {{$ticket->status->name}}
+                                        @endif
+                                        <span class="text-muted pull-right">
+                                            <small class="text-muted" style="font-size:10px">{{ Carbon\Carbon::parse($ticket->created_at)->toDayDateTimeString() }}</small>
                                         </span>
-                                        
                                     </div>
-                                </div>
 
+
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="reply-container col-sm-12 col-md-12">
                         <ul class="media-list">
-
 
                             @foreach($ticket->replies as $reply)
                                 <li class="media" style="border-top:1px solid #cacaca;padding:10px">
@@ -76,14 +95,13 @@
                                         </p>
                                     </div>
                                 </li>
-
                             @endforeach
-                            
-                            
+                        
                         </ul>
                     </div>
-
+                    <hr />
                     <div class="reply-form-container col-sm-12 col-md-12">
+                        <h4>Respond to this ticket</h4>
                         <form role="form" action="{{ route('reply.store') }}" method="POST">
                             
                             <!--put this code for token-->
@@ -105,11 +123,9 @@
 		</div>
 	</div>
 	<!--//main-->
-
 </div>
 
 <!--/panel body-->
-
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script type="text/javascript">
     tinymce.init({
@@ -124,6 +140,4 @@
       toolbar: 'bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
       content_css: '//www.tinymce.com/css/codepen.min.css'
     });
-
-
 </script>

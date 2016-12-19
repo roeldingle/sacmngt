@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Auth;
 use Modules\User\Entities\User;
 use Modules\User\Entities\Meta;
-use Modules\Ticket\Entities\Department;
+use Modules\User\Entities\Department;
 use Modules\Role\Entities\Role;
 use Module;
 use Validator;

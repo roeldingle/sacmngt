@@ -16,8 +16,9 @@
   @include('main.alert')
   <!--panel-->
   <div class="panel panel-default">
+
     <!--panel header (pass title, create_btn is display Create new button)-->
-    @include('ticket::layouts.header', ['title' => 'Ticket List', 'create_btn' => true]) 
+    @include('ticket::layouts.header', ['title' => (Request::segment('1') == 'ticket') ? 'My Tickets' : 'Ticket Support', 'create_btn' => true]) 
     <!--//panel header-->
      <!--panel body-->
     @include('ticket::layouts.table')

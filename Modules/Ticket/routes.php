@@ -2,6 +2,7 @@
 
 $department_segment = Request::segment('2');
 
+/****************ticket****************************/
 Route::group(
 	[
 	'middleware' => ['web','auth','ticket.owner'],
@@ -50,6 +51,60 @@ Route::group(
 
 });
 
+/****************support****************************/
+Route::group(
+	[
+	'middleware' => ['web','auth','ticket.support'],
+	 'prefix' => 'support/'.$department_segment,
+	  'namespace' => 'Modules\Ticket\Http\Controllers'
+	], function()
+	{
+
+
+    Route::get('/',[
+		'uses' => 'SupportController@index',
+		'as' => 'support.index',
+	]);
+
+    Route::get('/create',[
+		'uses' => 'SupportController@create',
+		'as' => 'support.create',
+	]);
+
+    Route::post('/store',[
+		'uses' => 'SupportController@store',
+		'as' => 'support.store',
+	]);
+
+	Route::get('/{code}',[
+		'uses' => 'SupportController@show',
+		'as' => 'support.show',
+	]);
+
+	Route::get('/{code}/edit',[
+		'uses' => 'SupportController@edit',
+		'as' => 'support.edit',
+	]);
+
+	Route::post('/{code}/update',[
+		'uses' => 'SupportController@update',
+		'as' => 'support.update',
+	]);
+
+	Route::post('/{id}/destroy',[
+		'uses' => 'SupportController@destroy',
+		'as' => 'support.destroy',
+	]);
+
+	Route::post('/{code}/ajaxupdatestatus',[
+		'uses' => 'SupportController@ajaxUpdateStatus',
+		'as' => 'support.ajaxUpdateStatus',
+	]);
+
+});
+
+
+/****************reply****************************/
 Route::group(
 	[
 	'middleware' => ['web','auth'],
@@ -73,7 +128,5 @@ Route::group(
 		'uses' => 'ReplyController@destroy',
 		'as' => 'reply.destroy',
 	]);
-
-
 
 });

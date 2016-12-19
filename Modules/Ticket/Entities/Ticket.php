@@ -27,6 +27,7 @@ class Ticket extends Model
     	return $this->belongsTo('Modules\User\Entities\User');
     }
 
+
     public function priority()
     {
     	return $this->hasOne('Modules\Ticket\Entities\Priority', 'id', 'priority_id' );
@@ -58,6 +59,21 @@ class Ticket extends Model
         ->where('is_active', 1);
     }
 
+    public function attendedBy()
+    {
+        $staff_id = $this->staff_filed;
+        $staff = User::find($staff_id);
+
+        if($staff !== null){
+            $staff = $staff->setMeta();
+            $return = $staff->fname ." ".$staff->lname;
+        }else{
+            $return = '----';
+        }
+
+        return $return;
+    }
+
 
 
     /****************************************************************/
@@ -77,10 +93,17 @@ class Ticket extends Model
         
         $ticket->department_id = $request->department->id;
         $ticket->priority_id = $request->input('priority_id');
-        $ticket->user_id = Auth::user()->id;
+        $ticket->user_id = ($request->input('user_id') !== null) ? $request->input('user_id') : Auth::user()->id;
         $ticket->subject = $request->input('subject');
         $ticket->message = $request->input('message');
         $ticket->status_id = 1;
+
+        /*will check if not ordinary user*/
+        if(Auth::user()->role->id != 4){
+            /*save staff/admin that creted ticket (usually for unfiled tickets) */
+            $ticket->staff_filed = Auth::user()->id;
+        }
+
         $ticket->is_active = true;
         $ticket->save();
 

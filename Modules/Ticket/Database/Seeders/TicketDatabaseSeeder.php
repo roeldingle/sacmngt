@@ -22,28 +22,11 @@ class TicketDatabaseSeeder extends Seeder
     {
         Model::unguard();
         
-        self::createDepartment();
         self::createTicketStatus();
         self::createTicketSPriority();
     }
 
 
-    public function createDepartment(){
-
-        $department = new Department();
-        $department->name = 'IT';
-        $department->description = 'Information Technology Department';
-        $department->is_active = true;
-        $department->save();
-
-        $department = new Department();
-        $department->name = 'HR';
-        $department->description = 'Human Resources Department';
-        $department->is_active = true;
-        $department->save();
-
-
-    }
 
     public function createTicketStatus(){
 
