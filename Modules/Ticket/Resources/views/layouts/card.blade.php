@@ -37,9 +37,9 @@
                                                     <span class="btn-status-text">{{ $ticket->status->name }}</span>
                                                   <span class="caret"></span></button>
                                                   <ul class="dropdown-menu">
-                                                    <li><a href="#" class="status-selection" data-status="1">Open</a></li>
-                                                    <li><a href="#" class="status-selection" data-status="2">In-process</a></li>
-                                                    <li><a href="#" class="status-selection" data-status="3">Close</a></li>
+                                                    @foreach(Modules\Ticket\Entities\Status::active()->get() as $status)
+                                                    <li><a href="#" class="status-selection" data-status="{{ $status->id }}">{{ ucwords($status->name) }}</a></li>
+                                                    @endforeach
                                                   </ul>
                                               @endif
                                               

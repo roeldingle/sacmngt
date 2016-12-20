@@ -12,7 +12,9 @@ use Modules\Ticket\Entities\Ticket;
 use Modules\Ticket\Entities\Department;
 use Modules\Ticket\Entities\Priority;
 use Modules\Ticket\Entities\Attachment;
+use Modules\Ticket\Entities\SupportActivity;
 use Validator;
+use Log;
 
 class SupportController extends Controller
 {
@@ -36,6 +38,15 @@ class SupportController extends Controller
     public function show(Request $request, $code){
 
         $ticket = $request->department->ticket->where('code',$code)->first();
+
+        /*if updated store in support activity*/
+        if($ticket){
+            $activity = new SupportActivity;
+            $activity->ticket_id = $ticket->id;
+            $activity->user_id = Auth::user()->id;
+            $activity->status_id = 1;
+            $activity->save();
+        }
 
         return view('ticket::show')
         ->with('ticket', $ticket);
@@ -146,8 +157,16 @@ class SupportController extends Controller
     public function ajaxUpdateStatus(Request $request){
 
         $values = array('status_id'=> $request->status, 'staff_filed' => Auth::user()->id);
-       
         $updated = Ticket::findOrFail($request->id)->update($values);
+
+        /*if updated store in support activity*/
+        if($updated){
+            $activity = new SupportActivity;
+            $activity->ticket_id = $request->id;
+            $activity->user_id = Auth::user()->id;
+            $activity->status_id = $request->status;
+            $activity->save();
+        }
 
         \Session::flash('info','Ticket status has been changed!');
         \Session::flash('alert', 'alert-success');
@@ -160,9 +179,6 @@ class SupportController extends Controller
         return $return;
 
     }
-
-
-    
 
 
 }
