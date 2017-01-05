@@ -19,8 +19,6 @@ class UserDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        self::createDepartment();
-
         $user = new User();
         $user->role_id = 1;
         $user->department_id = 3;
@@ -30,26 +28,4 @@ class UserDatabaseSeeder extends Seeder
     }
 
 
-    public function createDepartment(){
-
-        $department = new Department();
-        $department->name = 'IT';
-        $department->description = 'Information Technology Department';
-        $department->is_active = true;
-        $department->save();
-
-        $department = new Department();
-        $department->name = 'HR';
-        $department->description = 'Human Resources Department';
-        $department->is_active = true;
-        $department->save();
-
-        $department = new Department();
-        $department->name = 'CT';
-        $department->description = 'Creative Technology';
-        $department->is_active = true;
-        $department->save();
-
-
-    }
 }

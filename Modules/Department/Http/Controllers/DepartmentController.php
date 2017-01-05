@@ -1,20 +1,17 @@
 <?php
 
-namespace Modules\User\Http\Controllers;
+namespace Modules\Department\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 use Auth;
-use Modules\User\Entities\User;
-use Modules\User\Entities\Meta;
 use Modules\Department\Entities\Department;
-use Modules\Role\Entities\Role;
 use Module;
 use Validator;
 
-class UserController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,20 +19,20 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $per_page = config('app.default_table_limit');
+        $departments = Department::active()->paginate($per_page);
 
-        $users = User::getUserSearch($request);
-
-        return view('user::index')
+        return view('department::index')
         ->with('search', (isset($search)) ? $search : 0)
-        ->with('users',$users);
+        ->with('departments',$departments);
     }
 
     public function show($id){
 
-        $user = User::findOrFail($id);
+        $department = Department::findOrFail($id);
 
-        return view('user::show')
-        ->with('user', $user);
+        return view('department::show')
+        ->with('department', $department);
     }
 
     /**
@@ -44,7 +41,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        return view('department::create');
     }
 
     /**
@@ -55,27 +52,29 @@ class UserController extends Controller
     public function store(Request $request)
     {
        $validator = Validator::make($request->all(), [
-            'role_id' => 'required',
-            'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
-            'fname' => 'required|min:2',
-            'lname' => 'required|min:2',
-            'avatar' => 'required',
+            'name' => 'required|unique:departments,name,NULL,id,is_active,1',
+            'description' => 'required|min:2',
         ]);
 
 
         if ($validator->fails()) {
             return redirect()
-                ->route('user.create')
+                ->route('department.create')
                 ->withErrors($validator);
         }
 
-        $created = User::saveUser($request->all());
+
+        $department = new Department();
+        $department->name = $request->input('name');
+        $department->description = $request->input('description');
+        $department->is_active = true;
+        $department->save();
 
 
-        if($created){
+        if($department){
             return redirect()
-            ->route('user.edit', ['id' => $created->id])
-            ->with('info','New user created successfully!')
+            ->route('department.edit', ['id' => $department->id])
+            ->with('info','New Role created successfully!')
             ->with('alert', 'alert-success');
         }
     }
@@ -86,11 +85,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-      $user = User::findOrFail($id);
-        return view('user::edit')
-        ->with('department', Department::all())
-        ->with('role', Role::all())
-        ->with('user', $user);
+      $department = Department::findOrFail($id);
+
+        return view('department::edit')
+        ->with('department', $department);
     }
 
     /**
@@ -100,29 +98,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id){
 
-        $user = User::findOrFail($id);
+        $department = Department::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'role_id' => 'required',
-            'email' => 'required|unique:users,email,'.$id.',id,is_active,1|email|max:255',
-            'fname' => 'required|min:2',
-            'lname' => 'required|min:2',
-            'avatar' => 'required',
+            'name' => 'required|unique:departments,name,'.$id.',id,is_active,1',
+            'description' => 'required|min:2',
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                ->route('user.edit',['id' => $user->id])
+                ->route('department.edit',['id' => $department->id])
                 ->withErrors($validator);
         }
 
-        $updated = User::editUser($request->all(), $user);
+        $department->name = $request->input('name');
+        $department->description = $request->input('description');
+        $department->is_active = true;
+        $department->save();
 
         
-        if($updated){
+        if($department){
             return redirect()
-            ->route('user.edit',['id' => $user->id])
-            ->with('info','User has been updated!')
+            ->route('department.edit',['id' => $department->id])
+            ->with('info','Department has been updated!')
             ->with('alert', 'alert-success');
         }
 
@@ -136,9 +134,9 @@ class UserController extends Controller
 
        $values = array('is_active'=> 0);
        
-       $affectedRows = User::whereIn('id',$request->id)->update($values);
+       $affectedRows = Role::whereIn('id',$request->id)->update($values);
 
-        \Session::flash('info','User has been deleted!');
+        \Session::flash('info','Role has been deleted!');
         \Session::flash('alert', 'alert-danger');
 
         $return = [

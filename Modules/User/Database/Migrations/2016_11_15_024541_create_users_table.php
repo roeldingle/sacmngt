@@ -13,14 +13,6 @@ class CreateUsersTable extends Migration
     public function up()
     {
 
-        Schema::create('departments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->boolean('is_active')->default(1);
-        });
-
-
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->unsigned();
