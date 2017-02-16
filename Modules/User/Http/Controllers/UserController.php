@@ -44,7 +44,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        $roles = Role::pluck('name', 'id');
+        
+        return view('user::create')
+        ->with('roles', $roles);
     }
 
     /**

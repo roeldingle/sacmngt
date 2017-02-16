@@ -15,9 +15,8 @@ class CreateUsersTable extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('role_id')->unsigned();
-            $table->integer('department_id')->unsigned()->index();
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->integer('role_id')->unsigned()->index();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('is_active');
@@ -29,11 +28,18 @@ class CreateUsersTable extends Migration
         /*create meta user pivot*/
         Schema::create('meta_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('key',60);
-            $table->string('value');
+            $table->integer('team_id')->nullable()->unsigned()->index();
+            $table->foreign('team_id')->references('id')->on('team')->onDelete('cascade');
+            $table->integer('job_id')->nullable()->unsigned()->index();
+            $table->foreign('job_id')->references('id')->on('job')->onDelete('cascade');
+            $table->string('fname');
+            $table->string('mname');
+            $table->string('lname');
+            $table->string('address');
+            $table->string('contact');
+            $table->string('avatar');
         });
+
     }
 
     /**
