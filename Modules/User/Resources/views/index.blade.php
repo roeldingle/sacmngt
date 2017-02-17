@@ -9,7 +9,18 @@
 @stop
 
 @section('breadcrumbs')
-  @include('main.breadcrumbs', ['title' => 'User Management'])
+  @include('main.breadcrumbs', ['title' => 'User Management', 
+  'breadcrumbs' => 
+    [
+      [ 'title' => 'Dashboard',
+        'url' => '/user',
+      ],
+      [
+      'title' => 'User Management',
+      'url' => '/users',
+      ]
+    ]
+  ])
 @stop
 
 @section('content')

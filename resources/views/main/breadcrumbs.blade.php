@@ -2,7 +2,12 @@
 <div id="content">
 <!--breadcrumbs-->
   <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+    <div id="breadcrumb">
+
+    @foreach($breadcrumbs as $crumb)
+		<a href="" title="Go to {{ $crumb['title'] }}" class="tip-bottom"><i class="icon-home"></i> {{ $crumb['title'] }}</a>
+    @endforeach
+     </div>
     <h1>{{$title}}</h1>
   </div>
 <!--End-breadcrumbs-->
