@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Matrix Admin</title>
+<title>SAC System</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="{{ asset('css/theme/bootstrap.min.css') }}" />
@@ -62,6 +62,8 @@
 <script src="{{ asset('js/theme/matrix.popover.js') }}"></script> 
 <script src="{{ asset('js/theme/jquery.dataTables.min.js') }}"></script> 
 <script src="{{ asset('js/theme/matrix.tables.js') }}"></script> 
+
+<script src="{{ asset('js/common.js') }}"></script> 
 
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to

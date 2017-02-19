@@ -5,7 +5,7 @@
 @stop
 
 @section('sidemenu')
-  @include('main.sidemenu')
+  @include('main.sidemenu',['main' => 'Admin Settings', 'sub' => 'Users'])
 @stop
 
 @section('breadcrumbs')
@@ -24,7 +24,6 @@
 @stop
 
 @section('content')
-<hr>
     <div class="row-fluid">
       <div class="span12">
         
@@ -38,11 +37,11 @@
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th width="10px"><input type="checkbox" class="check-all" /></th>
+                  <th width="10px"><input type="checkbox" class="checkall" name="checkall"/></th>
                   <th width="20px">#</th>
-                  <th>Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th>Email</th>
+                  <th>User Role</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,7 +54,7 @@
                   <td style="text-align:center"><input type="checkbox" name="check" class="check" value="{{ $row->id }}"></td>
                   <td>{{ $loop->iteration }}</td>
                   <td>{{ $row->email }}</td>
-                  <td>{{ $row->password }}</td>
+                  <td>{{ $row->role->name }}</td>
                   <td class="" style="text-align:center">
                     
                     <a href="{{ route( 'user.edit', ['id' => $row->id] ) }}" class="btn btn-info btn-mini">View</a> 
@@ -68,8 +67,10 @@
               </tbody>
             </table>
           </div>
+
+          <a href="#" id="delete-btn" class="btn btn-danger btn-mini" style="margin:10px">Delete</a>
         </div>
-        
+        <!--end widget box-->
         </div>
       </div>
     </div>

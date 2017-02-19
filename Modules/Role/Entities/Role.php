@@ -8,7 +8,9 @@ use Modules\User\Entities\User;
 
 class Role extends Model
 {
-    protected $fillable = ['name','description'];
+    protected $fillable = ['name','description', 'is_active'];
+
+    public $timestamps = false;
 
     public function user()
     {

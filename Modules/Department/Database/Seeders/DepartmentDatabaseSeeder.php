@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Role\Database\Seeders;
+namespace Modules\Department\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use Modules\Role\Entities\Department;
+use Modules\Department\Entities\Department;
 
 
-class DepartmentsDatabaseSeeder extends Seeder
+class DepartmentDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -34,6 +34,18 @@ class DepartmentsDatabaseSeeder extends Seeder
         $department = new Department();
         $department->name = 'CT';
         $department->description = 'Creative Technology';
+        $department->is_active = true;
+        $department->save();
+
+        $department = new Department();
+        $department->name = 'CD';
+        $department->description = 'Creative Design';
+        $department->is_active = true;
+        $department->save();
+
+        $department = new Department();
+        $department->name = 'MS';
+        $department->description = 'Marketing Services';
         $department->is_active = true;
         $department->save();
     }

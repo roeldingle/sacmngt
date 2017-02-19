@@ -1,7 +1,29 @@
 @extends('main.main')
 
+@section('top-headermenu')
+  @include('main.top-headermenu')
+@stop
+
+@section('sidemenu')
+  @include('main.sidemenu',['main' => 'Admin Settings', 'sub' => 'Users'])
+@stop
+
+@section('breadcrumbs')
+  @include('main.breadcrumbs', ['title' => 'User Management', 
+  'breadcrumbs' => 
+    [
+      [ 'title' => 'Dashboard',
+        'url' => '/user',
+      ],
+      [
+      'title' => 'User Management',
+      'url' => '/users',
+      ]
+    ]
+  ])
+@stop
+
 @section('content')
-<hr>
     <div class="row-fluid">
       <div class="span12">
         

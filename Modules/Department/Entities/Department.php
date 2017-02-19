@@ -24,10 +24,6 @@ class Department extends Model
     	return $this->hasMany('Modules\User\Entities\User');
     }
 
-    public function ticket()
-    {
-    	return $this->hasMany('Modules\Ticket\Entities\Ticket', 'department_id');
-    }
 
     public function scopeActive($query)
     {

@@ -17,7 +17,6 @@ class CreateRolesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->boolean('is_active');
-            $table->timestamps();
         });
     }
 
