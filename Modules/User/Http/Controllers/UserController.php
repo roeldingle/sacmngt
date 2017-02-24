@@ -11,6 +11,7 @@ use Modules\User\Entities\User;
 use Modules\User\Entities\Meta;
 use Modules\Department\Entities\Department;
 use Modules\Role\Entities\Role;
+use Modules\Team\Entities\Team;
 use Module;
 use Validator;
 
@@ -34,8 +35,19 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
+        /*for select role*/
+        $roles = Role::active()->pluck('name', 'id');
+        $roles->prepend('--Select options--');
+
+        /*for select team*/
+        $teams = Team::active()->pluck('name', 'id');
+        $teams->prepend('--Select options--');
+
+
         return view('user::show')
-        ->with('user', $user);
+        ->with('user', $user)
+        ->with('roles', $roles)
+        ->with('teams', $teams);
     }
 
     /**
@@ -44,10 +56,18 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name', 'id');
+        /*for select role*/
+        $roles = Role::active()->pluck('name', 'id');
+        $roles->prepend('--Select options--');
+
+        /*for select department*/
+        $departments = Department::active()->pluck('name', 'id');
+        $departments->prepend('--Select options--');
+
         
         return view('user::create')
-        ->with('roles', $roles);
+        ->with('roles', $roles)
+        ->with('departments', $departments);
     }
 
     /**
@@ -59,9 +79,13 @@ class UserController extends Controller
     {
        $validator = Validator::make($request->all(), [
             'role_id' => 'required',
+            'department_id' => 'required',
             'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
             'fname' => 'required|min:2',
+            'mname' => 'required|min:2',
             'lname' => 'required|min:2',
+            'contact' => 'required',
+            'date_hired' => 'required',
             'avatar' => 'required',
         ]);
 
@@ -77,8 +101,8 @@ class UserController extends Controller
 
         if($created){
             return redirect()
-            ->route('user.edit', ['id' => $created->id])
-            ->with('info','New user created successfully!')
+            ->route('user.show',['id' => $created->id])
+            ->with('info','New User created successfully!')
             ->with('alert', 'alert-success');
         }
     }
@@ -90,9 +114,17 @@ class UserController extends Controller
     public function edit($id)
     {
       $user = User::findOrFail($id);
+
+      $roles = Role::active()->pluck('name', 'id');
+      $roles->prepend('--Select options--');
+
+      /*for select department*/
+      $departments = Department::active()->pluck('name', 'id');
+      $departments->prepend('--Select options--');
+
         return view('user::edit')
-        ->with('department', Department::all())
-        ->with('role', Role::all())
+        ->with('roles', $roles)
+        ->with('departments', $departments)
         ->with('user', $user);
     }
 
@@ -107,9 +139,13 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',
+            'department_id' => 'required',
             'email' => 'required|unique:users,email,'.$id.',id,is_active,1|email|max:255',
             'fname' => 'required|min:2',
+            'mname' => 'required|min:2',
             'lname' => 'required|min:2',
+            'contact' => 'required',
+            'date_hired' => 'required',
             'avatar' => 'required',
         ]);
 
@@ -119,12 +155,12 @@ class UserController extends Controller
                 ->withErrors($validator);
         }
 
-        $updated = User::editUser($request->all(), $user);
+        $updated = User::saveUser($request->all(), $user);
 
         
         if($updated){
             return redirect()
-            ->route('user.edit',['id' => $user->id])
+            ->route('user.show',['id' => $user->id])
             ->with('info','User has been updated!')
             ->with('alert', 'alert-success');
         }
@@ -141,7 +177,7 @@ class UserController extends Controller
        
        $affectedRows = User::whereIn('id',$request->id)->update($values);
 
-        \Session::flash('info','User has been deleted!');
+        \Session::flash('info','User(s) has been deleted!');
         \Session::flash('alert', 'alert-danger');
 
         $return = [

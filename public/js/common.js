@@ -51,22 +51,6 @@ $('.add-fileupload').bind('click', function(){
 });
 
 
-/**********  select input animation**************/
-$('.search-panel .dropdown-menu').find('a').click(function(e) {
-	e.preventDefault();
-	var param = $(this).attr("href").replace("#","");
-	var concept = $(this).text();
-	$('.search-panel span#search_concept-role').text(concept);
-	$('.input-group #search_param-role').val(param);
-});
-$('.search-panel .dropdown-menu').find('a').click(function(e) {
-    e.preventDefault();
-    var param = $(this).attr("href").replace("#","");
-    var concept = $(this).text();
-    $('.search-panel span#search_concept-department').text(concept);
-    $('.input-group #search_param-department').val(param);
-});
-
 
 /********** ajax delete selected items**************/
 $(document.body).on('click', '.delete-btn' ,function(){

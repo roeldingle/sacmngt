@@ -19,8 +19,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = config('app.default_table_limit');
-        $roles = Role::active()->paginate($per_page);
+        $roles = Role::getRoleSearch($request);
 
         return view('role::index')
         ->with('search', (isset($search)) ? $search : 0)
@@ -73,7 +72,7 @@ class RoleController extends Controller
 
         if($role){
             return redirect()
-            ->route('role.edit', ['id' => $role->id])
+            ->route('role.show', ['id' => $role->id])
             ->with('info','New Role created successfully!')
             ->with('alert', 'alert-success');
         }
@@ -119,7 +118,7 @@ class RoleController extends Controller
         
         if($role){
             return redirect()
-            ->route('role.edit',['id' => $role->id])
+            ->route('role.show',['id' => $role->id])
             ->with('info','Role has been updated!')
             ->with('alert', 'alert-success');
         }

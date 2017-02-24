@@ -20,7 +20,11 @@ class Meta extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['user_id','key', 'value'];
+	protected $fillable = ['user_id','team_id', 'job_id', 'fname', 'mname', 'lname', 'address', 'contact','avatar', 'date_hired'];
+
+	 protected $dates = [
+        'date_hired',
+    ];
 
 
 	/*
@@ -29,6 +33,11 @@ class Meta extends Model
 	public function user()
     {
         return $this->belongsTo('Modules\User\Entities\User');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('Modules\Team\Entities\Team','team_id');
     }
 
     // public function user()

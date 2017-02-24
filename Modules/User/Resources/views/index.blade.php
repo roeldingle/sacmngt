@@ -12,12 +12,8 @@
   @include('main.breadcrumbs', ['title' => 'User Management', 
   'breadcrumbs' => 
     [
-      [ 'title' => 'Dashboard',
+      [ 'title' => 'User Management',
         'url' => '/user',
-      ],
-      [
-      'title' => 'User Management',
-      'url' => '/users',
       ]
     ]
   ])
@@ -26,19 +22,25 @@
 @section('content')
     <div class="row-fluid">
       <div class="span12">
+          
+          @include('user::partials.search')
         
         <div class="widget-box">
+
           <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
             <h5>User List</h5>
-            <a href="{{ route('user.create') }}" class="btn btn-primary btn-mini pull-right" style="margin:10px">New User</a>
+            <a href="{{ route('user.create') }}" class="btn btn-primary btn-mini pull-right" style="margin:10px"><i class="icon-plus-sign"></i> Add New</a>
 
             </div>
           <div class="widget-content nopadding">
+            
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th width="10px"><input type="checkbox" class="checkall" name="checkall"/></th>
                   <th width="20px">#</th>
+                  <th>Department</th>
+                  <th>Fullname</th>
                   <th>Email</th>
                   <th>User Role</th>
                   <th>Action</th>
@@ -53,12 +55,14 @@
                    <tr>
                   <td style="text-align:center"><input type="checkbox" name="check" class="check" value="{{ $row->id }}"></td>
                   <td>{{ $loop->iteration }}</td>
+                  <td>{{ $row->department->name }}</td>
+                  <td>{{ (isset($row->meta) ) ? $row->meta->fname.' '.$row->meta->lname : '---' }}</td>
                   <td>{{ $row->email }}</td>
                   <td>{{ $row->role->name }}</td>
                   <td class="" style="text-align:center">
                     
-                    <a href="{{ route( 'user.edit', ['id' => $row->id] ) }}" class="btn btn-info btn-mini">View</a> 
-                    <a href="{{ route( 'user.show', ['id' => $row->id] ) }}" class="btn btn-success btn-mini">Edit</a> 
+                    <a href="{{ route( 'user.edit', ['id' => $row->id] ) }}" class="btn btn-info btn-mini">Edit</a> 
+                    <a href="{{ route( 'user.show', ['id' => $row->id] ) }}" class="btn btn-success btn-mini">View</a> 
                   </td>
                 </tr>
                   @endforeach
@@ -67,10 +71,15 @@
               </tbody>
             </table>
           </div>
-
-          <a href="#" id="delete-btn" class="btn btn-danger btn-mini" style="margin:10px">Delete</a>
+          <a href="#" id="delete-btn" class="btn btn-danger btn-mini" style="margin:10px"><i class="icon-minus-sign"></i> Delete</a>
+          
+          <br />
+          <div class="pagination pagination-sm pull-right" >
+            {!! $users->appends(['search_param' => $search['search_param'], 'search' => $search['search'] ])->links() !!}
+          </div>
         </div>
         <!--end widget box-->
+        
         </div>
       </div>
     </div>

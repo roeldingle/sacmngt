@@ -12,99 +12,33 @@
   @include('main.breadcrumbs', ['title' => 'User Management', 
   'breadcrumbs' => 
     [
-      [ 'title' => 'Dashboard',
+      [ 'title' => 'User Management',
         'url' => '/user',
       ],
       [
-      'title' => 'User Management',
-      'url' => '/users',
+      'title' => 'Add New User',
+      'url' => '/users/create',
       ]
     ]
   ])
 @stop
+
+
 
 @section('content')
     <div class="row-fluid">
       <div class="span12">
         
         <div class="widget-box">
-          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
             <h5>Add New User</h5>
+            <a href="{{ route('user.index') }}" class="btn btn-warning btn-mini pull-right" style="margin:10px"><i class="icon-arrow-left"></i> Back to User List</a>
           </div>
           <div class="widget-content nopadding">
 
             {!! Form::open(['route' => 'user.store', 'class' => 'form-horizontal']) !!}
               
-              <div class="control-group">
-                {!! Form::label('role_id', 'Role:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                {!! Form::select('role_id', $roles, null) !!}
-                </div>
-              </div>
-
-              <!--email-->
-              <div class="control-group">
-                {!! Form::label('email', 'Email:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::text('email', null , ['class' => 'span4']) !!}
-                </div>
-              </div>
-              <!--end email-->
-
-              <!--fname-->
-              <div class="control-group">
-                {!! Form::label('fname', 'First Name:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::text('fname', null , ['class' => 'span4']) !!}
-                </div>
-              </div>
-              <!--end fname-->
-
-              <!--mname-->
-              <div class="control-group">
-                {!! Form::label('mname', 'Middle Name:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::text('mname', null , ['class' => 'span4']) !!}
-                </div>
-              </div>
-              <!--end mname-->
-
-              <!--lname-->
-              <div class="control-group">
-                {!! Form::label('lname', 'Last Name:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::text('lname', null , ['class' => 'span4']) !!}
-                </div>
-              </div>
-              <!--end lname-->
-
-              <!--addres-->
-              <div class="control-group">
-                {!! Form::label('addres', 'Address:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::textarea('addres', null, ['class' => 'span4', 'size' => '3x3']) !!}
-                </div>
-              </div>
-              <!--end addres-->
-
-              <!--contact-->
-              <div class="control-group">
-                {!! Form::label('contact', 'Contact #:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::text('contact', null , ['class' => 'span4']) !!}
-                </div>
-              </div>
-              <!--end contact-->
-
-              <!--avatar url-->
-              <div class="control-group">
-                {!! Form::label('avatar', 'Avatar url:', ['class' => 'control-label']) !!}
-                <div class="controls">
-                  {!! Form::text('avatar', null , ['class' => 'span4']) !!}
-                </div>
-              </div>
-              <!--end lname-->
-
+             @include('user::partials.form')
 
             {!! Form::close() !!}
 

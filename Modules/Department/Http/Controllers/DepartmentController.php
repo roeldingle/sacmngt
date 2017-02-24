@@ -19,8 +19,7 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = config('app.default_table_limit');
-        $departments = Department::active()->paginate($per_page);
+        $departments = Department::getDepartmentSearch($request);
 
         return view('department::index')
         ->with('search', (isset($search)) ? $search : 0)
@@ -63,7 +62,7 @@ class DepartmentController extends Controller
                 ->withErrors($validator);
         }
 
-
+        /*save in db*/
         $department = new Department();
         $department->name = $request->input('name');
         $department->description = $request->input('description');
@@ -73,8 +72,8 @@ class DepartmentController extends Controller
 
         if($department){
             return redirect()
-            ->route('department.edit', ['id' => $department->id])
-            ->with('info','New Role created successfully!')
+            ->route('department.show', ['id' => $department->id])
+            ->with('info','New Department created successfully!')
             ->with('alert', 'alert-success');
         }
     }
@@ -107,7 +106,7 @@ class DepartmentController extends Controller
 
         if ($validator->fails()) {
             return redirect()
-                ->route('department.edit',['id' => $department->id])
+                ->route('department.show',['id' => $department->id])
                 ->withErrors($validator);
         }
 
@@ -119,7 +118,7 @@ class DepartmentController extends Controller
         
         if($department){
             return redirect()
-            ->route('department.edit',['id' => $department->id])
+            ->route('department.show',['id' => $department->id])
             ->with('info','Department has been updated!')
             ->with('alert', 'alert-success');
         }
@@ -134,9 +133,9 @@ class DepartmentController extends Controller
 
        $values = array('is_active'=> 0);
        
-       $affectedRows = Role::whereIn('id',$request->id)->update($values);
+       $affectedRows = Department::whereIn('id',$request->id)->update($values);
 
-        \Session::flash('info','Role has been deleted!');
+        \Session::flash('info','Department has been deleted!');
         \Session::flash('alert', 'alert-danger');
 
         $return = [

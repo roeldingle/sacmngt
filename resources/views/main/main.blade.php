@@ -15,6 +15,10 @@
 </head>
 <body>
 
+  <!--hidden value-->
+  <input type="hidden" nam="current_url" id="current_url" value="{{ Request::url() }}" />
+  {{ csrf_field() }} <!--include for ajax requests-->
+
   <!--Header-part-->
   <div id="header">
     <h1><a href="dashboard.html">Matrix Admin</a></h1>
@@ -26,6 +30,8 @@
   @yield('sidemenu')
 
   @yield('breadcrumbs')
+
+  @include('main.alert')
 
   <!--main body div-->
   <div class="container-fluid">

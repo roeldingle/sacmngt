@@ -1,29 +1,50 @@
-@extends('main.two-column-master')
+@extends('main.main')
 
-<!--main header part-->
-@include('main.navigation')
-@include('main.subnavigation')
-<!--//main header part-->
-
-<!--left part contains profile-->
-@section('content-left')
-  @include('main.left-profile')
+@section('top-headermenu')
+  @include('main.top-headermenu')
 @stop
-<!--//left part contains profile-->
 
-<!--center part contains main content-->
-@section('content-center')
-  @include('main.alert')
-  <!--panel-->
-  <div class="panel panel-default">
-    <!--panel header-->
-    @include('department::layouts.header', ['title' => 'Edit department'])
-    <!--//panel header-->
-    <!--panel body-->
-     @include('department::layouts.form')
-    <!--//panel body-->
-    
+@section('sidemenu')
+  @include('main.sidemenu',['main' => 'Admin Settings', 'sub' => 'Departments'])
+@stop
+
+@section('breadcrumbs')
+  @include('main.breadcrumbs', ['title' => 'Department Management', 
+  'breadcrumbs' => 
+    [
+      [ 'title' => 'Department Management',
+        'url' => '/department',
+      ],
+      [
+      'title' => 'Edit Department',
+      'url' => '/department',
+      ]
+    ]
+  ])
+@stop
+
+@section('content')
+    <div class="row-fluid">
+      <div class="span12">
+        
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+            <h5>Edit User</h5>
+            <a href="{{ route('department.index') }}" class="btn btn-warning btn-mini pull-right" style="margin:10px"><i class="icon-arrow-left"></i> Back to Department List</a>
+          </div>
+          <div class="widget-content nopadding">
+
+            {!! Form::model($department, ['route' => array('department.update', $department->id),'class' => 'form-horizontal']) !!}
+              
+              @include('department::partials.form')
+
+            {!! Form::close() !!}
+
+          </div>
+        </div>
+        
+        </div>
+      </div>
+    </div>
   </div>
-  <!--//panel-->
 @stop
-<!--//center part contains main content-->

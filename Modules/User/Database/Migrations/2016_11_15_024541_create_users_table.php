@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('role_id')->unsigned()->index();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->integer('department_id')->unsigned()->index();
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('is_active');
@@ -28,6 +30,8 @@ class CreateUsersTable extends Migration
         /*create meta user pivot*/
         Schema::create('meta_user', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->integer('team_id')->nullable()->unsigned()->index();
             $table->foreign('team_id')->references('id')->on('team')->onDelete('cascade');
             $table->integer('job_id')->nullable()->unsigned()->index();
@@ -37,7 +41,7 @@ class CreateUsersTable extends Migration
             $table->string('lname');
             $table->string('address');
             $table->string('contact');
-            $table->date('hired_date');
+            $table->date('date_hired');
             $table->string('avatar');
         });
 

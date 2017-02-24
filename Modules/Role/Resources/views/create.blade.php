@@ -1,31 +1,50 @@
-@extends('main.two-column-master')
+@extends('main.main')
 
-    <!--main header part-->
-    @include('main.navigation')
-    @include('main.subnavigation')
-    <!--//main header part-->
-
-
-<!--left part contains profile-->
-@section('content-left')
-  @include('main.left-profile')
+@section('top-headermenu')
+  @include('main.top-headermenu')
 @stop
-<!--//left part contains profile-->
 
-<!--center part contains main content-->
-@section('content-center')
-  @include('main.alert')
-  <!--panel-->
-  <div class="panel panel-default">
-    <!--panel header-->
-    @include('role::layouts.header', ['title' => 'Create role'])
-    <!--//panel header-->
-    <!--panel body-->
-     @include('role::layouts.form')
-    <!--//panel body-->
-    
+@section('sidemenu')
+  @include('main.sidemenu',['main' => 'Admin Settings', 'sub' => 'Roles'])
+@stop
+
+@section('breadcrumbs')
+  @include('main.breadcrumbs', ['title' => 'Role Management', 
+  'breadcrumbs' => 
+    [
+      [ 'title' => 'Roles Management',
+        'url' => '/role',
+      ],
+      [
+      'title' => 'Add New Role',
+      'url' => '/role/create',
+      ]
+    ]
+  ])
+@stop
+
+@section('content')
+    <div class="row-fluid">
+      <div class="span12">
+        
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Add New Role</h5>
+            <a href="{{ route('role.index') }}" class="btn btn-warning btn-mini pull-right" style="margin:10px"><i class="icon-arrow-left"></i> Back to Role List</a>
+          </div>
+          <div class="widget-content nopadding">
+
+            {!! Form::open(['route' => 'role.store', 'class' => 'form-horizontal']) !!}
+              
+             @include('role::partials.form')
+
+            {!! Form::close() !!}
+
+          </div>
+        </div>
+        
+        </div>
+      </div>
+    </div>
   </div>
-  <!--//panel-->
 @stop
-<!--//center part contains main content-->
-
