@@ -1,52 +1,44 @@
-@extends('main.three-column-master')
+@extends('main.main')
 
-<!--main header part-->
-@include('main.navigation')
-@include('main.subnavigation')
-<!--//main header part-->
-
-<!--left part contains profile-->
-@section('content-left')
-  @include('main.left-profile')
+@section('top-headermenu')
+  @include('main.top-headermenu')
 @stop
-<!--//left part contains profile-->
 
-<!--center part contains main content-->
-@section('content-center')
-@include('main.alert')
-  <!--center-->
-   <div class="well"> 
-       <form class="form-horizontal" role="form">
-        <h4>What's New</h4>
-         <div class="form-group" style="padding:14px;">
-          <textarea class="form-control" placeholder="Update your status"></textarea>
-        </div>
+@section('sidemenu')
+  @include('main.sidemenu',['main' => 'Dashboard', 'sub' => ''])
+@stop
+
+@section('breadcrumbs')
+  @include('main.breadcrumbs', ['title' => 'Dashboard', 
+  'breadcrumbs' => 
+    [
+      [ 'title' => 'Dashboard',
+        'url' => '/dashboard',
+      ]
+    ]
+  ])
+@stop
+
+@section('content')
+    <div class="row-fluid">
+      <div class="span12">
         
-         <button class="btn btn-success pull-right" type="button">Post</button>
-          <ul class="list-inline">
-            <li><a href="#"><i class="fa fa-align-left" aria-hidden="true"></i></a></li>
-            <li><a href="#"><i class="fa fa-align-center" aria-hidden="true"></i></a></li>
-            <li><a href="#"><i class="fa fa-align-right" aria-hidden="true"></i></a></li>
-          </ul>
-      </form>
-    </div>
+        <div class="widget-box">
 
-    <div class="panel panel-default">
-      <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Bootply Editor &amp; Code Library</h4></div>
-      <div class="panel-body">
-          <p><img src="assets/img/150x150.gif" class="img-circle pull-right"> <a href="#">The Bootstrap Playground</a></p>
-          <div class="clearfix"></div>
-          <hr>
-                  sdsdsdsdsdsd
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Dashboard</h5>
+            </div>
+          <div class="widget-content nopadding">
+            
+              Content here
+
+            
+          </div>
+        </div>
+        <!--end widget box-->
+        
+        </div>
       </div>
     </div>
-  <!--/center-->
-
+  </div>
 @stop
-<!--//center part contains main content-->
-
-<!--right part contains right-->
-@section('content-right')
-  @include('main.right')
-@stop
-<!--//right part contains profile-->

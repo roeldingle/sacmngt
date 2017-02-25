@@ -42,11 +42,14 @@
       <div class="controls">
       
 
-      @if(isset($choosen_department_id) && $choosen_department_id != null)
-      {!! Form::select('leader_id', $leaders,  isset($leader) ? $leader->leader_id : null ) !!}
-      @else
-      {!! Form::select('leader_id', $leaders, null, ['disabled' => 'disabled']) !!}
-      @endif
+      <select name="leader_id" @if(!isset($choosen_department_id) OR $choosen_department_id == 0) disabled  @endif >
+        <option value="0">--Select option--</option>
+      @foreach($leaders as $leader)
+        <option value="{{ $leader->id }}" @if(isset($team) && $team->leader_id == $leader->id) selected  @endif >
+          {{ $leader->meta->fname }} {{ $leader->meta->lname }}
+        </option>
+      @endforeach
+      </select>
 
 
       @if($errors->has('leader_id'))

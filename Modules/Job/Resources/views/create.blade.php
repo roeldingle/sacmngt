@@ -5,19 +5,19 @@
 @stop
 
 @section('sidemenu')
-  @include('main.sidemenu',['main' => 'Admin Settings', 'sub' => 'Teams'])
+  @include('main.sidemenu',['main' => 'Admin Settings', 'sub' => 'Jobs'])
 @stop
 
 @section('breadcrumbs')
-  @include('main.breadcrumbs', ['title' => 'Team Management', 
+  @include('main.breadcrumbs', ['title' => 'Job Management', 
   'breadcrumbs' => 
     [
-      [ 'title' => 'Team Management',
-        'url' => '/team',
+      [ 'title' => 'Job Management',
+        'url' => '/job',
       ],
       [
-      'title' => 'Add New Team',
-      'url' => '/team/create',
+      'title' => 'Add New Job',
+      'url' => '/job/create',
       ]
     ]
   ])
@@ -29,12 +29,12 @@
         
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
-            <h5>Add New Team</h5>
-            <a href="{{ route('team.index') }}" class="btn btn-warning btn-mini pull-right" style="margin:10px"><i class="icon-arrow-left"></i> Back to Team List</a>
+            <h5>Add New Job</h5>
+            <a href="{{ route('job.index') }}" class="btn btn-warning btn-mini pull-right" style="margin:10px"><i class="icon-arrow-left"></i> Back to job List</a>
           </div>
           <div class="widget-content nopadding">
               
-              {!! Form::open(['method' => 'GET', 'route' => 'team.create','class' => 'form-horizontal']) !!}
+              {!! Form::open(['method' => 'GET', 'route' => 'job.create','class' => 'form-horizontal']) !!}
               <div class="control-group">
                 {!! Form::label('department_id', 'Department:', ['class' => 'control-label']) !!}
                 <div class="controls">
@@ -55,9 +55,9 @@
               </div>
             {!! Form::close() !!}
 
-            {!! Form::open(['route' => 'team.store', 'class' => 'form-horizontal']) !!}
+            {!! Form::open(['route' => 'job.store', 'class' => 'form-horizontal']) !!}
               
-             @include('team::partials.form')
+             @include('job::partials.form')
 
             {!! Form::close() !!}
 

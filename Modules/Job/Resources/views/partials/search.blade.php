@@ -1,6 +1,6 @@
 <!--search-->
 <div class="search-wrap">
-  <form method="GET" action="{{ route('team.index') }}" >
+  <form method="GET" action="{{ route('job.index') }}" >
     <select name="search_param" required>
       <option value="">--Select--</option>
       <option value="name">Name</option>

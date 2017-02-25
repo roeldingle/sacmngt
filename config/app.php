@@ -245,6 +245,6 @@ return [
     | 
     |
     */
-    'default_table_limit' => 10,
+    'default_table_limit' => 8,
 
 ];

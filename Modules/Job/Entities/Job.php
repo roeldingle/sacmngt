@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Team\Entities;
+namespace Modules\Job\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
 
-class Team extends Model
+class Job extends Model
 {
 
 	/**
@@ -13,21 +13,21 @@ class Team extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'teams';
+	protected $table = 'jobs';
 
-    protected $fillable = ['department_id','name','description','leader_id', 'is_active'];
+    protected $fillable = ['department_id','name','description', 'is_active'];
 
     public $timestamps = false;
 
      /*
         function to get team serach
     */
-    public static function getTeamSearch($request){
+    public static function getJobSearch($request){
 
         $per_page = config('app.default_table_limit');
 
         /*default value*/
-        $teams = Team::active()->orderBy('id','DESC')->paginate($per_page);
+        $jobs = Job::active()->orderBy('id','DESC')->paginate($per_page);
 
         /*check if there are serach parameter*/
         if ($request->input('search_param') !== "" && $request->has('search_param') && $request->has('search')) {
@@ -35,13 +35,13 @@ class Team extends Model
             $search['search_param'] = $request->input('search_param');
             $search['search'] = $request->input('search');
 
-            $teams = Team::active()->where($search['search_param'],'LIKE','%'.$search['search'].'%')->paginate($per_page);
+            $jobs = Job::active()->where($search['search_param'],'LIKE','%'.$search['search'].'%')->paginate($per_page);
 
 
         }
 
 
-        return $teams;
+        return $jobs;
     }
 
     public function department()
@@ -49,15 +49,6 @@ class Team extends Model
         return $this->belongsTo('Modules\Department\Entities\Department');
     }
 
-    public function leader()
-    {
-        return $this->hasOne('Modules\User\Entities\User', 'id', 'leader_id');
-    }
-
-    public function members()
-    {
-    	return $this->hasMany('Modules\User\Entities\User', 'team_id')->orderBy('job_id','DESC');
-    }
 
 
     public function scopeActive($query)

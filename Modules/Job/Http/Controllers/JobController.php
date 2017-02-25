@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Team\Http\Controllers;
+namespace Modules\Job\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -8,12 +8,12 @@ use Illuminate\Routing\Controller;
 
 use Auth;
 use Modules\Department\Entities\Department;
-use Modules\Team\Entities\Team;
+use Modules\Job\Entities\Job;
 use Modules\User\Entities\User;
 use Module;
 use Validator;
 
-class TeamController extends Controller
+class JobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,24 +22,24 @@ class TeamController extends Controller
     public function index(Request $request)
     {
 
-      $teams = Team::getTeamSearch($request);
+      $jobs = Job::getJobSearch($request);
 
-        return view('team::index')
+        return view('job::index')
         ->with('search', (isset($search)) ? $search : 0)
-        ->with('teams',$teams);
+        ->with('jobs',$jobs);
 
     }
 
     public function show($id){
 
-        $team = Team::findOrFail($id);
+        $job = Job::findOrFail($id);
 
         /*for select department*/
         $departments = Department::active()->pluck('name', 'id');
         $departments->prepend('--Select options--');
 
-        return view('team::show')
-        ->with('team', $team)
+        return view('job::show')
+        ->with('job', $job)
         ->with('departments', $departments);
     }
 
@@ -54,18 +54,14 @@ class TeamController extends Controller
         $departments = Department::active()->get();
 
         if(isset($request->department_id) && $request->department_id != 0){
-            $leaders = User::active()->where('department_id', $request->department_id)->get();
             $choosen_department_id = $request->department_id;
 
         }else{
-            $leaders = User::active()->get();
             $choosen_department_id = null;
-
         }
 
-        return view('team::create')
+        return view('job::create')
             ->with('departments', $departments)
-            ->with('leaders', $leaders)
             ->with('choosen_department_id', $choosen_department_id);
         
     }
@@ -80,31 +76,30 @@ class TeamController extends Controller
        $validator = Validator::make($request->all(), [
             'department_id' => 'required',
             //'leader' => 'required',
-            'name' => 'required|unique:teams,name,NULL,id,is_active,1',
+            'name' => 'required|unique:Jobs,name,NULL,id,is_active,1',
             'description' => 'required|min:2',
         ]);
 
 
         if ($validator->fails()) {
             return redirect()
-                ->route('team.create')
+                ->route('job.create')
                 ->withErrors($validator);
         }
 
 
-        $team = new Team();
-        $team->department_id = $request->input('department_id');
-        $team->leader_id = $request->input('leader_id');
-        $team->name = $request->input('name');
-        $team->description = $request->input('description');
-        $team->is_active = true;
-        $team->save();
+        $job = new Job();
+        $job->department_id = $request->input('department_id');
+        $job->name = $request->input('name');
+        $job->description = $request->input('description');
+        $job->is_active = true;
+        $job->save();
 
 
-        if($team){
+        if($job){
             return redirect()
-            ->route('team.show', ['id' => $team->id])
-            ->with('info','New Team created successfully!')
+            ->route('job.show', ['id' => $job->id])
+            ->with('info','New Job created successfully!')
             ->with('alert', 'alert-success');
         }
     }
@@ -115,16 +110,14 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
-      $team = Team::findOrFail($id);
+      $job = Job::findOrFail($id);
 
 
       /*for select department*/
-        $leaders = User::active()->where('department_id', $team->department->id)->get();
-        $choosen_department_id = $team->department->id;
+        $choosen_department_id = $job->department->id;
 
-        return view('team::edit')
-        ->with('team', $team)
-        ->with('leaders', $leaders)
+        return view('job::edit')
+        ->with('job', $job)
         ->with('choosen_department_id', $choosen_department_id);
     }
 
@@ -135,31 +128,30 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id){
 
-        $team = Team::findOrFail($id);
+        $job = Job::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'department_id' => 'required',
-            'name' => 'required|unique:teams,name,'.$id.',id,is_active,1',
+            'name' => 'required|unique:Jobs,name,'.$id.',id,is_active,1',
             //'description' => 'required|min:2',
         ]);
 
         if ($validator->fails()) {
             return redirect()
-                ->route('team.edit',['id' => $team->id])
+                ->route('job.edit',['id' => $job->id])
                 ->withErrors($validator);
         }
 
-        $team->department_id = $request->input('department_id');
-        $team->leader_id = $request->input('leader_id');
-        $team->name = $request->input('name');
-        $team->description = $request->input('description');
-        $team->is_active = true;
-        $team->save();
+        $job->department_id = $request->input('department_id');
+        $job->name = $request->input('name');
+        $job->description = $request->input('description');
+        $job->is_active = true;
+        $job->save();
 
-        if($team){
+        if($job){
             return redirect()
-            ->route('team.show',['id' => $team->id])
-            ->with('info','Team has been updated!')
+            ->route('job.show',['id' => $job->id])
+            ->with('info','Job has been updated!')
             ->with('alert', 'alert-success');
         }
 
@@ -173,9 +165,9 @@ class TeamController extends Controller
 
        $values = array('is_active'=> 0);
        
-       $affectedRows = Team::whereIn('id',$request->id)->update($values);
+       $affectedRows = Job::whereIn('id',$request->id)->update($values);
 
-        \Session::flash('info','Team has been deleted!');
+        \Session::flash('info','Job has been deleted!');
         \Session::flash('alert', 'alert-danger');
 
         $return = [
@@ -188,41 +180,6 @@ class TeamController extends Controller
     }
 
 
-    /*ajax get department users for leader/poc*/
-    public function getDepartmentUserData(Request $request){
-
-       $users_raw = User::active()->where($request->category, $request->id)->get();
-
-
-        $users = $users_raw->map(function($items){
-            return [
-             'id' => $items->id,
-             'name' => $items->setMeta()->fname . ' ' . $items->setMeta()->lname,
-             ];
-        });
-
-        return $users;
-        
-
-    }
-
-    /*ajax get department users for leader/poc*/
-    public function getDepartmentTeamData(Request $request){
-
-       $teams_raw = Team::active()->where($request->category, $request->id)->get();
-
-
-        $teams = $teams_raw->map(function($items){
-            return [
-             'id' => $items->id,
-             'name' => $items->name,
-             ];
-        });
-
-        return $teams;
-        
-
-    }
 
 
 }
