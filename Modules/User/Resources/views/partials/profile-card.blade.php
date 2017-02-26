@@ -32,15 +32,15 @@
               </tr>
               <tr>
                 <td>Position :</td>
-                <td>{{ (isset($user) && isset($user->meta) ) ? $user->meta->date_hired : '---' }}</td>
+                <td>{{ (isset($user) && isset($user->meta->job) ) ? $user->meta->job->description : '---' }}</td>
               </tr>
               <tr>
                 <td>Date Hired :</td>
-                <td>{{ (isset($user) && isset($user->meta) ) ? $user->meta->date_hired : '---' }}</td>
+                <td>{{ (isset($user) && isset($user->meta->date_hired) ) ? $user->meta->date_hired->format('F d, Y') : '---' }}</td>
               </tr>
               <tr>
                 <td>Address</td>
-                <td>{{ (isset($user) && isset($user->meta) ) ? $user->meta->address : '---' }}</td>
+                <td>{{ (isset($user) && isset($user->meta->address) ) ? $user->meta->address : '---' }}</td>
               </tr>
              
             </tbody>

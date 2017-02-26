@@ -1,5 +1,21 @@
 <!--sidebar-menu-->
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+<div id="sidebar">
+
+  <div style="padding:10px;color:#fff;background-color:#90228D;text-align:center">
+    <img src="{{ Auth::user()->getAvatar() }}" class="img-circle" style="width:50px;"> <br>
+      <span class="text">
+
+        @if(isset(Auth::user()->meta))
+        {{ Auth::user()->meta->fname }} {{ Auth::user()->meta->lname }}
+        @else
+        {{ Auth::user()->email }}
+        @endif
+
+
+      </span><br>
+      <span style="font-size:10px">{{ Auth::user()->role->name }}</span>
+  </div>
+  <a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <ul>
     <li class="@if($main == 'Dashboard')  active  @endif"><a href="/dashboard"><i class="icon icon-dashboard"></i> <span>Dashboard</span></a> </li>
     <li> <a href="widgets.html"><i class="icon icon-trophy"></i> <span>My SAC Pins</span></a> </li>

@@ -17,7 +17,7 @@ body {
 	border-top: 1px solid #37414b; border-bottom: 1px solid #1f262d;
 }
 #sidebar > ul > li.active {
-    background-color: #27a9e3; border-bottom: 1px solid #27a9e3;  border-top: 1px solid #27a9e3;
+    background-color: #14A54A; border-bottom: 1px solid #14A54A;  border-top: 1px solid #14A54A;
 }
 #sidebar > ul > li.active a{ color:#fff; text-decoration:none;}
 
@@ -25,7 +25,7 @@ body {
 	background-color:#F66;
 }
 #sidebar > ul > li > a:hover {
-	background-color: #27a9e3; color:#fff;
+	background-color: #14A54A; color:#fff;
 }
 #sidebar > ul li ul {
 	background-color: #1e242b;
@@ -33,7 +33,7 @@ body {
 #sidebar > ul li ul li a{ color:#939da8}
 #sidebar > ul li ul li a:hover, #sidebar > ul li ul li.active a {
 	color: #fff;
-	background-color: #28b779;
+	background-color: #F8A51D;
 }
 
 

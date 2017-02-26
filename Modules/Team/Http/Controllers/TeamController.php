@@ -34,13 +34,8 @@ class TeamController extends Controller
 
         $team = Team::findOrFail($id);
 
-        /*for select department*/
-        $departments = Department::active()->pluck('name', 'id');
-        $departments->prepend('--Select options--');
-
         return view('team::show')
-        ->with('team', $team)
-        ->with('departments', $departments);
+        ->with('team', $team);
     }
 
     /**
@@ -60,7 +55,6 @@ class TeamController extends Controller
         }else{
             $leaders = User::active()->get();
             $choosen_department_id = null;
-
         }
 
         return view('team::create')

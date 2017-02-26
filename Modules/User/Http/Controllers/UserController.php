@@ -12,6 +12,7 @@ use Modules\User\Entities\Meta;
 use Modules\Department\Entities\Department;
 use Modules\Role\Entities\Role;
 use Modules\Team\Entities\Team;
+use Modules\Job\Entities\Job;
 use Module;
 use Validator;
 
@@ -54,20 +55,31 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
         /*for select role*/
         $roles = Role::active()->pluck('name', 'id');
         $roles->prepend('--Select options--');
 
         /*for select department*/
-        $departments = Department::active()->pluck('name', 'id');
-        $departments->prepend('--Select options--');
+        $departments = Department::active()->get();
+
+        if(isset($request->department_id) && $request->department_id != 0){
+            $jobs = Job::active()->where('department_id', $request->department_id)->get();
+            $choosen_department_id = $request->department_id;
+
+        }else{
+            $jobs = Job::active()->get();
+            $choosen_department_id = null;
+        }
+
+        return view('user::create')
+            ->with('departments', $departments)
+            ->with('jobs', $jobs)
+            ->with('roles', $roles)
+            ->with('choosen_department_id', $choosen_department_id);
 
         
-        return view('user::create')
-        ->with('roles', $roles)
-        ->with('departments', $departments);
     }
 
     /**
@@ -80,6 +92,7 @@ class UserController extends Controller
        $validator = Validator::make($request->all(), [
             'role_id' => 'required',
             'department_id' => 'required',
+            'job_id' => 'required',
             'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
             'fname' => 'required|min:2',
             'mname' => 'required|min:2',
@@ -122,10 +135,17 @@ class UserController extends Controller
       $departments = Department::active()->pluck('name', 'id');
       $departments->prepend('--Select options--');
 
+      /*for select department*/
+      $jobs = Job::active()->where('department_id', $user->department_id)->get();
+      $choosen_department_id = $user->department_id;
+
+
         return view('user::edit')
-        ->with('roles', $roles)
+        ->with('user', $user)
         ->with('departments', $departments)
-        ->with('user', $user);
+        ->with('jobs', $jobs)
+        ->with('roles', $roles)
+        ->with('choosen_department_id', $choosen_department_id);
     }
 
     /**
@@ -139,7 +159,8 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',
-            'department_id' => 'required',
+            //'department_id' => 'required',
+            'job_id' => 'required',
             'email' => 'required|unique:users,email,'.$id.',id,is_active,1|email|max:255',
             'fname' => 'required|min:2',
             'mname' => 'required|min:2',

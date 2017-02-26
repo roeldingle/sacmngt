@@ -4,9 +4,12 @@
 @section('content')
     <div class="row-fluid">
         <div class="span8"></div>
-      <div class="span4" style="border:2px solid red">
+      <div class="span4" style="border:1px solid #fff">
+
           <!--form-->
             <form id="loginform" class="form-horizontal" role="form" action="/login" method="POST">
+              <h2>Let's be awesome :)</h2>
+              <hr />
                 {{ csrf_field() }}
                 <!--user email-->
                 <div class="form-group">
@@ -33,7 +36,10 @@
                 </div>
 
                 <hr />
-                <div style="font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+                <div style="font-size: 90%; position: relative; top:-10px">
+                  <a href="#" >Forgot password?</a><br />
+                  <a href="/registration">Don't have an account yet? Register here</a>
+                </div>
 
                 <div style="margin-top:10px" class="form-group">
                     <!-- Button -->

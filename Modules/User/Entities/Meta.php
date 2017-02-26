@@ -40,9 +40,10 @@ class Meta extends Model
         return $this->belongsTo('Modules\Team\Entities\Team','team_id');
     }
 
-    // public function user()
-    // {
-    // 	return $this->belongsToMany('App\Models\User','meta_user','meta_id','user_id');
-    // }
+    public function job()
+    {
+        return $this->belongsTo('Modules\Job\Entities\Job','job_id');
+    }
+
 
 }

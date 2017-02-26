@@ -12,21 +12,31 @@
       </div>
     </div>
     <!--end role-->
-    
-    <!--department-->
+
+    <!--jobs-->
     <div class="control-group">
-      {!! Form::label('department_id', 'Department:', ['class' => 'control-label']) !!}
+      {!! Form::label('job_id', 'Position:', ['class' => 'control-label']) !!}
       <div class="controls">
-      {!! Form::select('department_id', $departments,  (isset($user)) ? $user->department_id : null ) !!}
+      
+
+      <select name="job_id" @if(!isset($choosen_department_id) OR $choosen_department_id == 0) disabled  @endif >
+        <option value="0">--Select option--</option>
+      @foreach($jobs as $job)
+        <option value="{{ $job->id }}" @if(isset($user) && isset($user->meta->job_id) && $user->meta->job_id == $job->id) selected  @endif >
+          {{ $job->name }}
+        </option>
+      @endforeach
+      </select>
 
 
-      @if($errors->has('department_id'))
-        <span class="error">{{ $errors->first('department_id') }}</span>
+      @if($errors->has('job_id'))
+        <span class="error">{{ $errors->first('job_id') }}</span>
       @endif
       
       </div>
     </div>
-    <!--end department-->
+    <!--end jobs-->
+    
 
       <!--email-->
     <div class="control-group">
