@@ -56,7 +56,7 @@ class Team extends Model
 
     public function members()
     {
-    	return $this->hasMany('Modules\User\Entities\User', 'team_id')->orderBy('job_id','DESC');
+    	return $this->hasMany('Modules\User\Entities\Meta', 'team_id')->orderBy('job_id','ASC');
     }
 
 

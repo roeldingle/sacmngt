@@ -11,21 +11,31 @@
         {{ Auth::user()->email }}
         @endif
 
-
       </span><br>
       <span style="font-size:10px">{{ Auth::user()->role->name }}</span>
   </div>
   <a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+
+
   <ul>
     <li class="@if($main == 'Dashboard')  active  @endif"><a href="/dashboard"><i class="icon icon-dashboard"></i> <span>Dashboard</span></a> </li>
 
-    <li class="submenu @if($main == 'My Profile')  active open  @endif"> <a href="#"><i class="icon icon-bookmark"></i> <span>My Profile</span> <span class="label label-important">3</span></a>
+    <li class="submenu @if($main == 'My Profile')  active open  @endif"> <a href="#"><i class="icon icon-star"></i> <span>My Profile</span> <span class="label label-important">3</span></a>
       <ul>
         <li class="@if($sub == 'Profile') active  @endif"><a href="{{ route('profile.index') }}"><i class="icon icon-star"></i> Profile</a></li>
         <li class="@if($sub == 'Edit Profile') active  @endif"><a href="{{ route('profile.edit') }}"><i class="icon icon-edit"></i> Edit Profile</a></li>
         <li class="@if($sub == 'Change Password') active  @endif"><a href="{{ route('profile.change_password') }}"><i class="icon icon-unlock"></i> Change Password</a></li>
       </ul>
     </li>
+
+
+    <li class="submenu @if($main == 'My Team')  active open  @endif"> <a href="#"><i class="icon icon-group"></i> <span>My Team</span> <span class="label label-important">3</span></a>
+      <ul>
+        <li class="@if($sub == 'Team') active  @endif"><a href="{{ route('myteam.index') }}"><i class="icon icon-group"></i> Team</a></li>
+        <li class="@if($sub == 'Task') active  @endif"><a href="{{ route('myteam.index') }}"><i class="icon icon-tasks"></i> My Task</a></li>
+      </ul>
+    </li>
+
 
 
     <li> <a href="widgets.html"><i class="icon icon-trophy"></i> <span>My SAC Pins</span></a> </li>
