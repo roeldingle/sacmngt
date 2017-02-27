@@ -27,8 +27,8 @@
         <div class="span3">
           <!--end widget box-->
           <div class="widget-box">
-            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-              <h5>{{ $member->fname or '---' }} {{ $member->lname or '---' }}</h5>
+            <div class="widget-title"> 
+              <h5>{{ $member->job->description or '---' }}</h5>
             </div>
             <div class="widget-content">
               <div class="container-fluid">
@@ -37,17 +37,13 @@
                   <div class="span3">
                     <img class="img-circle" src="{{ $member->avatar }}"> 
                   </div>
-                  
-                </div>
-
-                <div class="row">
-                  <div class="span3"></div>
-                  <div class="span9" style="margin-top:10px">
-
-                    
-
+                  <div class="span9" style="padding-left:5px;line-height:15px">
+                    <strong>{{ $member->fname or '---' }} {{ $member->lname or '---' }}</strong>
+                    <small>{{ Modules\User\Entities\User::findOrFail($member->user_id)->email }}</small>
+                    <small>{{ $member->contact or '---' }}</small>
                   </div>
                 </div>
+
                 
               </div>
       

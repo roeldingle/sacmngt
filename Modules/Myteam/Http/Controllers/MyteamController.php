@@ -25,6 +25,7 @@ class MyteamController extends Controller
         $team = Team::findOrFail(Auth::user()->meta->team_id);
         $members = $team->members()->where('team_id',$team->id)->get();
 
+
         return view('myteam::index')
         ->with('team',$team)
         ->with('members',$members);
