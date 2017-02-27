@@ -1,18 +1,23 @@
+    <!--department-->
+    <div class="control-group">
+      {!! Form::label('department_id', 'Department:', ['class' => 'control-label']) !!}
+      <div class="controls">
+
+        <strong>{{ $user->department->description }}</strong>
+        <input type="hidden" name="department_id" value="{{ $user->department_id }}">
+        
+      </div>
+    </div>
+    <!--end email-->
+
     <!--email-->
     <div class="control-group">
       {!! Form::label('email', 'Email:', ['class' => 'control-label']) !!}
       <div class="controls">
 
-        @if(isset($process) &&  $process == 'edit')
         <strong>{{ $user->email }}</strong>
         <input type="hidden" name="email" value="{{ $user->email }}">
-        @else
-        {!! Form::text('email', null, ['class' => 'span4']) !!}
-        @endif
-
-        @if($errors->has('email'))
-          <span class="error">{{ $errors->first('email') }}</span>
-        @endif
+        
       </div>
     </div>
     <!--end email-->
@@ -22,11 +27,9 @@
     <div class="control-group">
       {!! Form::label('role_id', 'Role:', ['class' => 'control-label']) !!}
       <div class="controls">
-      {!! Form::select('role_id', $roles, null) !!}
-  
-      @if($errors->has('role_id'))
-        <span class="error">{{ $errors->first('role_id') }}</span>
-      @endif
+      
+      <strong>{{ $user->role->name }}</strong>
+      <input type="hidden" name="role_id" value="{{ $user->role_id }}">
       
       </div>
     </div>
@@ -51,7 +54,7 @@
       @if($errors->has('job_id'))
         <span class="error">{{ $errors->first('job_id') }}</span>
       @endif
-      
+
       </div>
     </div>
     <!--end team-->
@@ -79,8 +82,6 @@
       </div>
     </div>
     <!--end jobs-->
-
-    
 
    
     <!--fname-->
@@ -176,5 +177,6 @@
 
 
     <div class="form-actions">
+      <a href="{{ route('profile.index') }}" class="btn btn-info">Cancel</a>
       <button type="submit" class="btn btn-success">Save</button>
     </div>

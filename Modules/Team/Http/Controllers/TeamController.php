@@ -96,6 +96,12 @@ class TeamController extends Controller
 
 
         if($team){
+
+            /*update user team set as leader*/
+            if(isset($team->leader_id) && $team->leader_id != 0){
+                User::find($team->leader_id)->meta->update(['team_id' => $team->id]);
+            }
+
             return redirect()
             ->route('team.show', ['id' => $team->id])
             ->with('info','New Team created successfully!')
@@ -151,6 +157,12 @@ class TeamController extends Controller
         $team->save();
 
         if($team){
+
+            /*update user team set as leader*/
+            if(isset($team->leader_id)){
+                User::find($team->leader_id)->meta->update(['team_id' => $team->id]);
+            }
+
             return redirect()
             ->route('team.show',['id' => $team->id])
             ->with('info','Team has been updated!')

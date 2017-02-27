@@ -49,7 +49,7 @@
                       </option>
                     @endforeach
                     </select>
-
+                    <span class="label label-info" style="font-size:9px">*Changing this will refresh the page</span>
                 @if($errors->has('department_id'))
                   <span class="error">{{ $errors->first('department_id') }}</span>
                 @endif
@@ -58,7 +58,7 @@
             {!! Form::close() !!}
 
             {!! Form::open(['route' => 'user.store', 'class' => 'form-horizontal']) !!}
-              
+            <input type="hidden" name="department_id" value="@if(isset($choosen_department_id)) {{ $choosen_department_id }} @else 0 @endif" />
              @include('user::partials.form')
 
             {!! Form::close() !!}

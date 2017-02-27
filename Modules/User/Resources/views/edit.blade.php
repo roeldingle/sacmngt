@@ -42,11 +42,12 @@
                 <label class="control-label" for="">Department:</label>
                 <div class="controls">
                 <strong>{{ $user->department->description }}</strong>
+
                 <input type="hidden" name="department_id" value="{{ $user->department->id }}">
                 </div>
               </div>
               
-              @include('user::partials.form')
+              @include('user::partials.form',['process' => 'edit'])
 
             {!! Form::close() !!}
 
