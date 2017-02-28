@@ -10,7 +10,7 @@
           <img class="img-circle" src="{{ $user->getAvatar() }}"> 
         </div>
         <div class="span8" style="margin-top:10px;">
-          <h4>{{ (isset($user) && isset($user->meta) ) ? $user->meta->fname.' '.$user->meta->lname : $user->email }}</h4>
+          <h4>{{ (isset($user) && isset($user->meta) ) ? $user->meta->fname.' '.$user->meta->lname : $user->email }} <small>(#{{ $user->emp_id }})</small></h4>
           <span><i class="icon-envelope-alt"></i> &nbsp; {{ (isset($user) ) ? $user->email: '---' }}</span><br />
           <span><i class="icon-phone"></i> &nbsp; {{ (isset($user) && isset($user->meta) ) ? $user->meta->contact : '---' }}</span><br />
         </div>

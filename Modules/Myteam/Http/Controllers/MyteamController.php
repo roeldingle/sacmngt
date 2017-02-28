@@ -22,13 +22,23 @@ class MyteamController extends Controller
     public function index()
     {
 
-        $team = Team::findOrFail(Auth::user()->meta->team_id);
-        $members = $team->members()->where('team_id',$team->id)->get();
+        $auth_team_id = isset(Auth::user()->meta->team_id) ? Auth::user()->meta->team_id : 0;
 
 
-        return view('myteam::index')
-        ->with('team',$team)
-        ->with('members',$members);
+        if($auth_team_id  != 0){
+
+            $team = Team::findOrFail($auth_team_id);
+            $members = $team->members()->where('team_id',$team->id)->get();
+            return view('myteam::index')
+            ->with('team',$team)
+            ->with('members',$members);
+        }else{
+            return view('myteam::index')
+            ->with('members', null);
+        }
+
+        
+
     }
 
     public function edit()

@@ -1,3 +1,17 @@
+    <!--fname-->
+    <div class="control-group">
+      {!! Form::label('emp_id', 'Employee #:', ['class' => 'control-label']) !!}
+      <div class="controls">
+        {!! Form::text('emp_id', isset($user) ? $user->emp_id : null , ['class' => 'span4']) !!}
+
+        @if($errors->has('emp_id'))
+          <span class="error">{{ $errors->first('emp_id') }}</span>
+        @endif
+
+      </div>
+    </div>
+    <!--end fname-->
+
     <!--email-->
     <div class="control-group">
       {!! Form::label('email', 'Email:', ['class' => 'control-label']) !!}

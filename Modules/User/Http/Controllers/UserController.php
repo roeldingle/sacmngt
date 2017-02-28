@@ -96,7 +96,7 @@ class UserController extends Controller
        $validator = Validator::make($request->all(), [
             'role_id' => 'required',
             'department_id' => 'required',
-            //'team_id' => 'required',
+            'emp_id' => 'required',
             //'job_id' => 'required',
             'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
             'fname' => 'required|min:2',
@@ -166,6 +166,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'role_id' => 'required',
+            //'emp_id' => 'required',
             //'department_id' => 'required',
             //'team_id' => 'required',
             //'job_id' => 'required',

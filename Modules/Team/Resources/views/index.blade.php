@@ -57,7 +57,20 @@
                   <td>{{ $row->department->name }}</td>
                   <td>{{ $row->name }}</td>
                   <td>{{ $row->description }}</td>
-                  <td>{{ (isset($row->leader) && isset($row->leader->meta)) ? $row->leader->meta->fname. ' '.$row->leader->meta->lname : '---' }}</td>
+                  <td>
+
+                    @if(isset($row->leader))
+                      @if(isset($row->leader->meta->fname) && isset($row->leader->meta->lname))
+                      {{ $row->leader->meta->fname. ' '.$row->leader->meta->lname }}
+                      @else
+                      {{ Modules\User\Entities\User::findOrFail($row->leader_id)->email }}
+                      @endif
+                    @else
+                      ---
+                    @endif
+
+
+                  </td>
                   <td class="" style="text-align:center">
                     
                     <a href="{{ route( 'team.edit', ['id' => $row->id] ) }}" class="btn btn-info btn-mini">Edit</a> 

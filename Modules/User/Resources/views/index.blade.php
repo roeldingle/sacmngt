@@ -39,9 +39,11 @@
                 <tr>
                   <th width="10px"><input type="checkbox" class="checkall" name="checkall"/></th>
                   <th width="20px">#</th>
+                  <th width="20px">Emp.no</th>
                   <th>Department</th>
                   <th>Fullname</th>
                   <th>Email</th>
+                  <th>Position</th>
                   <th>User Role</th>
                   <th>Action</th>
                 </tr>
@@ -55,9 +57,11 @@
                    <tr>
                   <td style="text-align:center"><input type="checkbox" name="check" class="check" value="{{ $row->id }}"></td>
                   <td>{{ $loop->iteration }}</td>
+                  <td>{{ $row->emp_id or '---' }}</td>
                   <td>{{ $row->department->name }}</td>
                   <td>{{ (isset($row->meta) ) ? $row->meta->fname.' '.$row->meta->lname : '---' }}</td>
                   <td>{{ $row->email }}</td>
+                  <td>{{ $row->meta->job->name or '---' }}</td>
                   <td>{{ $row->role->name }}</td>
                   <td class="" style="text-align:center">
                     

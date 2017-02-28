@@ -20,6 +20,7 @@ class UserDatabaseSeeder extends Seeder
 
         $user = new User();
         $user->role_id = 1;
+        $user->emp_id = 91;
         $user->department_id = 3;
         $user->email = 'rmdingle@straightarrow.com.ph';
         $user->password = bcrypt("secret");

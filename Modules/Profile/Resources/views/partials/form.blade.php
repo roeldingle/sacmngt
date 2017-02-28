@@ -1,3 +1,14 @@
+       <!--emp_id-->
+    <div class="control-group">
+      {!! Form::label('emp_id', 'Employee #:', ['class' => 'control-label']) !!}
+      <div class="controls">
+        <strong>{{ $user->emp_id }}</strong>
+        <input type="hidden" name="emp_id" value="{{ $user->emp_id }}">
+
+      </div>
+    </div>
+    <!--end emp_id-->
+
     <!--department-->
     <div class="control-group">
       {!! Form::label('department_id', 'Department:', ['class' => 'control-label']) !!}

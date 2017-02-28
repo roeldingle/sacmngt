@@ -27,7 +27,7 @@ class User extends Authenticatable
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['role_id','department_id', 'email', 'password','is_active'];
+	protected $fillable = ['role_id','emp_id','department_id', 'email', 'password','is_active'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -79,19 +79,21 @@ class User extends Authenticatable
 	*/
 	public static function saveUser($input, $user = null){
 
-		$default_password = 'secret';
+		$default_password = 'password';
 
 	 	$user = ($user != null) ? $user : new User();
         $user->role_id = $input['role_id'];
+        $user->emp_id = $input['emp_id'];
         $user->department_id = $input['department_id'];
         $user->email = $input['email'];
-        $user->password = isset($input['password']) ? bcrypt($input['password']) : bcrypt($default_password);
+        /*set password for default plus emp_id*/
+        $user->password = isset($input['password']) ? bcrypt($input['password']) : bcrypt($default_password.$user->emp_id);
         $user->is_active = true;
         $user->save();
         
 
         /*unset array values of input for Meta table*/
-        $removeKeys = array('_token','role_id','department_id', 'email', 'password','password_confirmation');
+        $removeKeys = array('_token','role_id','emp_id','department_id', 'email', 'password','password_confirmation');
         foreach($removeKeys as $key) {
            unset($input[$key]);
         }

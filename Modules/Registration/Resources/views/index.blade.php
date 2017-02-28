@@ -16,6 +16,15 @@
                     <!--user role select type-->
                     <input type="hidden" class="form-control" name="role_id"  value="4">
 
+                    <!--user email-->
+                    <div class="form-group">
+                       
+                        <div class="col-sm-12 col-md-12" style="padding-left: 0;">
+                          <label for="emp_id">Employee # :</label>
+                          <input type="text" class="form-control" name="emp_id" value="@if(isset($user)){{ old('emp_id', $user->emp_id) }}@endif" placeholder="Employee number">
+                        </div>
+                    </div>
+
                     <!--user role select type-->
                     <div class="form-group">
                        

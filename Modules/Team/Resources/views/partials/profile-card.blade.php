@@ -23,7 +23,15 @@
               </tr>
               <tr>
                 <td>Leader :</td>
-                <td>{{ $team->leader->meta->fname or '---' }} {{ $team->leader->meta->lname or '---' }}</td>
+                <td>
+
+                @if(isset($team->leader->meta->fname) && isset($team->leader->meta->lname))
+                {{ $team->leader->meta->fname or '---' }} {{ $team->leader->meta->lname or '---' }}
+                @else
+                {{ $team->leader->email }}
+                @endif
+
+                </td>
               </tr>
              
             </tbody>

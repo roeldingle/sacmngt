@@ -57,6 +57,8 @@ class TeamController extends Controller
             $choosen_department_id = null;
         }
 
+
+
         return view('team::create')
             ->with('departments', $departments)
             ->with('leaders', $leaders)
@@ -160,7 +162,11 @@ class TeamController extends Controller
 
             /*update user team set as leader*/
             if(isset($team->leader_id)){
-                User::find($team->leader_id)->meta->update(['team_id' => $team->id]);
+             
+                if($leader_meta = User::find($team->leader_id)->meta !== null){
+                  $leader_meta->update(['team_id' => $team->id]);
+                }
+                
             }
 
             return redirect()

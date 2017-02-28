@@ -42,13 +42,21 @@
       <div class="controls">
       
 
-      <select name="leader_id" @if(!isset($choosen_department_id) OR $choosen_department_id == 0) disabled  @endif >
+      <select name="leader_id" @if(!isset($choosen_department_id) OR $choosen_department_id == 0 OR $choosen_department_id == null) disabled  @endif >
         <option value="0">--Select option--</option>
-      @foreach($leaders as $leader)
-        <option value="{{ $leader->id }}" @if(isset($team) && $team->leader_id == $leader->id) selected  @endif >
-          {{ $leader->meta->fname }} {{ $leader->meta->lname }}
-        </option>
-      @endforeach
+
+        @if(isset($leaders) && count($leaders) > 0)
+        @foreach($leaders as $leader)
+          <option value="{{ $leader->id }}" @if(isset($team) && isset($team->leader_id) && $team->leader_id == $leader->id) selected  @endif >
+
+            @if(isset($leader->meta->fname) && isset($leader->meta->lname))
+            {{ $leader->meta->fname }} {{ $leader->meta->lname }}
+            @else
+            {{ $leader->email }}
+            @endif
+          </option>
+        @endforeach
+        @endif
       </select>
 
 
