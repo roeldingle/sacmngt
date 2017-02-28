@@ -37,8 +37,6 @@ class MyteamController extends Controller
             ->with('members', null);
         }
 
-        
-
     }
 
     public function edit()
