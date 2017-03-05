@@ -31,6 +31,7 @@ class RegistrationController extends Controller
 
         $validator = Validator::make($input, [
             'role_id' => 'required',
+            'emp_id' => 'required',
             'department_id' => 'required',
             'email' => 'required|unique:users,email,NULL,id,is_active,1|email|max:255',
             'password' => 'required|min:3',
@@ -45,6 +46,7 @@ class RegistrationController extends Controller
 
         $user = new User();
         $user->role_id = $input['role_id'];
+        $user->emp_id = $input['emp_id'];
         $user->department_id = $input['department_id'];
         $user->email = $input['email'];
         $user->password = bcrypt($input['password']);

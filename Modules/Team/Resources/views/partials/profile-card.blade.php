@@ -25,10 +25,10 @@
                 <td>Leader :</td>
                 <td>
 
-                @if(isset($team->leader->meta->fname) && isset($team->leader->meta->lname))
+                @if(isset($team->leader_id) && isset($team->leader->meta->fname) && isset($team->leader->meta->lname))
                 {{ $team->leader->meta->fname or '---' }} {{ $team->leader->meta->lname or '---' }}
                 @else
-                {{ $team->leader->email }}
+                {{ $team->leader->email or '---' }}
                 @endif
 
                 </td>

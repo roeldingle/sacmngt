@@ -43,7 +43,7 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('contact');
             $table->date('date_hired');
-            $table->string('avatar');
+            $table->text('avatar');
         });
 
     }

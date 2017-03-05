@@ -31,7 +31,7 @@
 
     <li class="submenu @if($main == 'My Team')  active open  @endif"> <a href="#"><i class="icon icon-group"></i> <span>My Team</span> <span class="label label-important">3</span></a>
       <ul>
-        <li class="@if($sub == 'Team') active  @endif"><a href="{{ route('myteam.index') }}"><i class="icon icon-group"></i> Team</a></li>
+        <li class="@if($sub == 'Team') active  @endif"><a href="{{ route('myteam.index') }}"><i class="icon icon-group"></i> Team Dashboard</a></li>
         <li class="@if($sub == 'Task') active  @endif"><a href="{{ route('myteam.index') }}"><i class="icon icon-tasks"></i> My Task</a></li>
       </ul>
     </li>

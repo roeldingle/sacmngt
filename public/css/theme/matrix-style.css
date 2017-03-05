@@ -1601,3 +1601,14 @@ span.error {
 .search-wrap button{float:right;}
 
 #loginform{padding:20px;color:#fff}
+
+.new-update {
+    border-top: 1px solid #DDDDDD;
+    padding: 4px 8px;
+}
+
+.new-update .update-date .update-day {font-size: 14px;}
+
+small {
+    font-size: 75%;
+}
