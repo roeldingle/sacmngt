@@ -28,9 +28,9 @@ Route::group(
 		'as' => 'myteam.change_password',
 	]);
 
-	Route::post('/update_password',[
-		'uses' => 'MyteamController@update_password',
-		'as' => 'myteam.update_password',
+	Route::post('/add_task',[
+		'uses' => 'MyteamController@add_task',
+		'as' => 'myteam.add_task',
 	]);
 
 

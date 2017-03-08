@@ -18,6 +18,21 @@ $('#delete-btn').bind('click',function (event) {
     Common.modal(attr);
 });
 
+
+/*******Add task for team*******/
+$('.create-task').bind('click',function (event) {
+    event.preventDefault();
+
+    var html_form = $('#add-task-form').html();
+
+     var attr = {
+        title: 'Add Task',
+        body: html_form,
+        value: ['hidden',],
+    };
+    Common.modal(attr);
+});
+
 /********** status selection on ticket view**************/
 $('.status-selection').bind('click',function () {
     var selected = $(this);
@@ -138,6 +153,10 @@ var Common = {
             switch(attr.button){
                 case "delete-btn":
                 html += '<button type="button" class="btn btn-primary '+attr.button+'">Continue</button>';
+                break;
+
+                case "save-btn":
+                html += '<button type="submit" class="btn btn-success '+attr.button+'">Save</button>';
                 break;
             }
             

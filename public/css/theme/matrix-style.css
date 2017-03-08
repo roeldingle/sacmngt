@@ -1607,8 +1607,9 @@ span.error {
     padding: 4px 8px;
 }
 
+.update-done{line-height:14px;}
 .new-update .update-date .update-day {font-size: 14px;}
 
 small {
-    font-size: 75%;
+    font-size: 78%;
 }
