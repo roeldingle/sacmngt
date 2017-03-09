@@ -146,7 +146,7 @@ var Common = {
         html += '</div>';
 
         html += '<div class="modal-footer">';
-        html += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>';
+        html += '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
 
         if(attr.button){
 

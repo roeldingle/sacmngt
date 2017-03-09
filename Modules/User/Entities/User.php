@@ -36,6 +36,12 @@ class User extends Authenticatable
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    /*
+        Users ticket
+    */
+    public function task(){
+        return $this->hasMany('Modules\Myteam\Entities\Mytask', 'assign_id');
+    }
 
 	/*
 		Users meta relationship
@@ -52,7 +58,7 @@ class User extends Authenticatable
     }
 
     /*
-        Users role
+        Users department
     */
     public function department(){
         return $this->belongsTo('Modules\Department\Entities\Department');

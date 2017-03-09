@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Auth;
 use Modules\User\Entities\User;
 use Modules\Team\Entities\Team;
-use Modules\Job\Entities\Job;
+use Modules\Myteam\Entities\Mytask;
 use Module;
 use Validator;
 
@@ -29,6 +29,7 @@ class MyteamController extends Controller
 
             $team = Team::findOrFail($auth_team_id);
             $members = $team->members()->where('team_id',$team->id)->get();
+       
 
             return view('myteam::index')
             ->with('team',$team)
@@ -42,6 +43,33 @@ class MyteamController extends Controller
 
    public function add_task(Request $request){
 
-        dd($request->name);
+        $validator = Validator::make($request->all(), [
+            'assign_id' => 'required',
+            'name' => 'required',
+            'description' => 'required|min:2',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('myteam.index')
+                ->withErrors($validator);
+        }
+
+
+        $mytask = new Mytask();
+        $mytask->assign_id = $request->input('assign_id');
+        $mytask->name = $request->input('name');
+        $mytask->description = $request->input('description');
+        $mytask->is_active = true;
+        $mytask->save();
+
+
+        if($mytask){
+            return redirect()
+            ->route('myteam.index')
+            ->with('info','New Task created successfully!')
+            ->with('alert', 'alert-success');
+        }
    }
 }

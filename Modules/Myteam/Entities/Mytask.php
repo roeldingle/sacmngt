@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use Modules\User\Entities\User;
 
-class Myteam extends Model
+class Mytask extends Model
 {
-
-   
 
     public function user()
     {
-    	return $this->hasMany('Modules\User\Entities\User');
+    	return $this->belongsTo('Modules\User\Entities\User', 'assign_id');
     }
 
     public function scopeActive($query)
