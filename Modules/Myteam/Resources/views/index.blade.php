@@ -35,7 +35,7 @@
         @else
 
           <!--team events-->
-          <div class="span3">
+          <div class="span3" style="height:100%">
             <!--end widget box-->
             <div class="widget-box">
               <div class="widget-title" style="background: #F8A51D;"> 
@@ -61,9 +61,8 @@
                       <div class="widget-content nopadding updates">
 
                       @foreach(Modules\Myteam\Entities\Mytask::active()->where('assign_id', 0)->get() as $task)
-
                         <div class="new-update clearfix">
-                              <i class="icon-glass"></i>
+                              <i class="icon-calendar"></i>
                                 <small class="update-done">
                                   <strong>{{ $task->name }}</strong>
                                   <br />
@@ -78,7 +77,6 @@
                     </div>
                   </div>
                   <!--end task-->
-
                   
                 </div>
         
@@ -121,7 +119,7 @@
                       @foreach(Modules\Myteam\Entities\Mytask::active()->where('assign_id', $member->id)->get() as $task)
 
                         <div class="new-update clearfix">
-                              <i class="icon-glass"></i>
+                              <i class="icon-calendar"></i>
                                 <small class="update-done">
                                   <strong>{{ $task->name }}</strong>
                                   <br />
