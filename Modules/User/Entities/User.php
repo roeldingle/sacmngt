@@ -93,7 +93,12 @@ class User extends Authenticatable
         $user->department_id = $input['department_id'];
         $user->email = $input['email'];
         /*set password for default plus emp_id*/
-        $user->password = isset($input['password']) ? bcrypt($input['password']) : bcrypt($default_password.$user->emp_id);
+        if($user != null){
+            $user->password = $user->password;
+        }else{
+            $user->password = isset($input['password']) ? bcrypt($input['password']) : bcrypt($default_password.$user->emp_id);
+        }
+        
         $user->is_active = true;
         $user->save();
         

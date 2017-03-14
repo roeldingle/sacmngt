@@ -21,7 +21,7 @@
 
 @section('content')
 
-    <a href="#" class="create-task btn btn-success">Add Task</a>
+    
     <div class="row-fluid">
 
         @if($members == null)
@@ -34,62 +34,78 @@
         
         @else
 
-          <!--team events-->
-          <div class="span3" style="height:100%">
-            <!--end widget box-->
-            <div class="widget-box">
-              <div class="widget-title" style="background: #F8A51D;"> 
-                <h5 style="color:#fff">Team Events</h5>
-              </div>
-              <div class="widget-content">
-                <div class="container-fluid">
 
-                  <div class="row">
+          <!--team dashboard-->
+          <div class="widget-box">
+            <div class="widget-title bg_lg" style="background: #F8A51D;color:#fff">
+              <h5 style="color:#fff">Team Dashboard</h5>
+            </div>
+            <div class="widget-content">
+              <div class="row-fluid" style="margin-top:0">
+                <div class="span3">
+                  <div class="row-fluid" style="margin-top:0">
                     <div class="span3">
                       <img class="img-circle" src="https://cdn.scratch.mit.edu/static/site/users/avatars/352/9928.png"> 
                     </div>
                     <div class="span9" style="padding-left:5px;line-height:15px">
-                      <strong>{{ $team->name }}</strong><br />
-                      <small>{{ $team->description }}</small>
+                      <h3 style="margin-top:0;margin-bottom:0">{{ $team->name }}</h3>
+                      <p>{{ $team->description }}</p><br /><br />
+
+                      <br>
+                      <!--task-->
+                      <div class="row">
+                        <div class="span12">
+
+                          <div class="widget-content nopadding updates">
+
+                          @foreach(Modules\Myteam\Entities\Mytask::active()->where('assign_id', 0)->get() as $task)
+                            <div class="new-update clearfix">
+                                  <i class="icon-calendar"></i>
+                                    <small class="update-done">
+                                      <strong>{{ $task->name }}</strong>
+                                      <br />
+                                      <span style="font-size:8px;color:#F66">{{ $task->start_at->format('M d, Y') }} to {{ $task->end_at->format('M d, Y') }}</span>
+                                    </small>
+                                    <br />
+                              </div>
+                            @endforeach
+
+
+                         </div>
+                        </div>
+                      </div>
+                      <!--end task-->
+                      <br />
+
+                      <a href="#" class="create-task btn btn-success pull-right">Add Task</a>
                     </div>
+                    
                   </div>
-                  <br>
-                  <!--task-->
-                  <div class="row">
-                    <div class="span12">
-
-                      <div class="widget-content nopadding updates">
-
-                      @foreach(Modules\Myteam\Entities\Mytask::active()->where('assign_id', 0)->get() as $task)
-                        <div class="new-update clearfix">
-                              <i class="icon-calendar"></i>
-                                <small class="update-done">
-                                  <strong>{{ $task->name }}</strong>
-                                  <br />
-                                  <span style="font-size:8px;color:#F66">{{ $task->description }}</span>
-                                </small>
-                                <br />
-                          </div>
-                        @endforeach
-
-
-                     </div>
-                    </div>
-                  </div>
-                  <!--end task-->
-                  
                 </div>
+                <div class="span6"></div>
+                <div class="span3">
+                  <ul class="site-stats">
+                    <li class="bg_lh"><i class="icon-user"></i> <strong>{{ count($members) }}</strong> <small>Total Members</small></li>
+                    <li class="bg_lh"><i class="icon-plus"></i> <strong>{{ count(Modules\Myteam\Entities\Mytask::active()->whereIn('assign_id',[1,2,0,6,5])) }}</strong> <small>Task Assigned</small></li>
+                    <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong>656</strong> <small>Total Shop</small></li>
+                    <li class="bg_lh"><i class="icon-tag"></i> <strong>9540</strong> <small>Total Orders</small></li>
+                    <li class="bg_lh"><i class="icon-repeat"></i> <strong>10</strong> <small>Pending Orders</small></li>
+                    <li class="bg_lh"><i class="icon-globe"></i> <strong>8540</strong> <small>Online Orders</small></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end team dashboard-->
+
         
-            <!--end widget box-->
-            </div>
-            </div>
-        </div>
-          <!--end team events-->
+      </div>
+      <div class="row-fluid">
 
 
 
-          @foreach($members as $member)
-          <div class="span3">
+          @foreach($members as $index=>$member)
+          <div class="span3" @if(($index % 4) == 0)  style="margin-left:0px" @endif>
             <!--end widget box-->
             <div class="widget-box">
               <div class="widget-title"> 
@@ -123,7 +139,7 @@
                                 <small class="update-done">
                                   <strong>{{ $task->name }}</strong>
                                   <br />
-                                  <span style="font-size:8px;color:#F66">{{ $task->description }}</span>
+                                  <span style="font-size:8px;color:#F66">{{ $task->start_at->format('M d, Y') }} to {{ $task->end_at->format('M d, Y') }}</span>
                                 </small>
                                 <br />
                           </div>
@@ -141,14 +157,21 @@
             </div>
             </div>
         </div>
+
+        @if(($index % 3) == 0 && $index != 0)
+        </div><div class="row-fluid">
+        @endif
+
+        
         @endforeach
       @endif
 
       <div id="add-task-form" style="display: none">
-        <div class="row">
-          <div class="span4">
+        <!-- <div class="row">
+          <div class="span4"> -->
         {!! Form::open(['route' => 'myteam.add_task', 'class' => 'form-horizontal']) !!}
 
+        <input type="hidden" name="team_id" value="{{ $team->id or '' }}">
 
         <!--member-->
         <div class="control-group">
@@ -172,12 +195,17 @@
           </div>
           <!--end name-->
           <br />
-          <!--description-->
+          <!--start_at-->
           <div class="control-group">
-            Description : <br />{!! Form::text('description', null, ['class' => 'span4']) !!}
-            
+            Date Start : <br />{!! Form::date('start_at', null, ['class' => 'span4']) !!}
           </div>
-          <!--end description-->
+          <!--end start_at-->
+          <!--end_at-->
+          <div class="control-group">
+            Date End : <br />{!! Form::date('end_at', null, ['class' => 'span4']) !!}
+          </div>
+          <!--end end_at-->
+
           <br />
 
           <div class="form-actions">
@@ -185,8 +213,8 @@
           </div>
 
         {!! Form::close() !!}
-        </div>
-        </div>
+       <!--  </div>
+        </div> -->
     </div>
         
         

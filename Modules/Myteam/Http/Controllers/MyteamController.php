@@ -46,7 +46,7 @@ class MyteamController extends Controller
         $validator = Validator::make($request->all(), [
             'assign_id' => 'required',
             'name' => 'required',
-            'description' => 'required|min:2',
+            'start_at' => 'required',
         ]);
 
 
@@ -58,9 +58,11 @@ class MyteamController extends Controller
 
 
         $mytask = new Mytask();
+        $mytask->team_id = $request->input('team_id');
         $mytask->assign_id = $request->input('assign_id');
         $mytask->name = $request->input('name');
-        $mytask->description = $request->input('description');
+        $mytask->start_at = $request->input('start_at');
+        $mytask->end_at = ($request->input('end_at') !== '') ? $request->input('end_at') : $request->input('start_at');
         $mytask->is_active = true;
         $mytask->save();
 

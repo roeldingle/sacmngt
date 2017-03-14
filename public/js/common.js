@@ -73,6 +73,7 @@ $(document.body).on('click', '.delete-btn' ,function(){
 });
 
 
+
 /*
     Common functions
 */
