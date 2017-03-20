@@ -20,7 +20,6 @@
 @stop
 
 @section('content')
-
     
     <div class="row-fluid">
 
@@ -28,12 +27,9 @@
         <div style="text-align:center;margin-bottom:20%">
           <h3>You haven't setup your team yet.</h3>
           <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit my Profile</a>
-
         </div>
         
-        
         @else
-
 
           <!--team dashboard-->
           <div class="widget-box">
@@ -69,7 +65,6 @@
                                     <br />
                               </div>
                             @endforeach
-
 
                          </div>
                         </div>
@@ -151,7 +146,6 @@
                   <!--end task-->
                   
                 </div>
-
         
             <!--end widget box-->
             </div>
