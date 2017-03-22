@@ -1,41 +1,31 @@
-@extends('main.two-column-master')
+@extends('main.main')
 
-<!--main header part-->
-@include('main.navigation')
-@include('main.subnavigation')
-<!--//main header part-->
-
-<!--left part contains profile-->
-@section('content-left')
-  @include('main.left-profile')
+@section('top-headermenu')
+  @include('main.top-headermenu')
 @stop
-<!--//left part contains profile-->
 
-<!--center part contains main content-->
-@section('content-center')
-  @include('main.alert')
-  <!--panel body-->
+@section('sidemenu')
+  @include('main.sidemenu',['main' => 'ITSupport', 'sub' => null])
+@stop
 
-    @if(Auth::user()->role->id < 4)
-      @include('ticket::layouts.summary-dashboard')
-    @endif
-    <!--//panel body-->
+@section('breadcrumbs')
+  @include('main.breadcrumbs', ['title' => 'IT Support', 
+  'breadcrumbs' => 
+    [
+      [ 'title' => 'IT Support',
+        'url' => '/ticket/it',
+      ]
+    ]
+  ])
+@stop
 
-  <!--panel-->
-  <div class="panel panel-default">
-
-    <!--panel header (pass title, create_btn is display Create new button)-->
-    @include('ticket::layouts.header', ['title' => (Request::segment('1') == 'ticket') ? 'My Tickets' : 'Ticket Support', 'create_btn' => true]) 
-
-    <!--//panel header-->
-     <!--panel body-->
-    @include('ticket::layouts.table')
-    <!--//panel body-->
-    <!--panel footer-->
-    @include('ticket::layouts.footer')
-  <!--//panel footer-->
+@section('content')
     
+  <div class="row-fluid">
+    1
   </div>
-  <!--//panel-->
+
+  <div class="row-fluid">
+    2
+  </div>
 @stop
-<!--//center part contains main content-->

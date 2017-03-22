@@ -23,7 +23,6 @@ class TicketDatabaseSeeder extends Seeder
         Model::unguard();
         
         self::createTicketStatus();
-        //self::createTicketSPriority();
     }
 
 
@@ -33,41 +32,24 @@ class TicketDatabaseSeeder extends Seeder
         $status = new Status();
         $status->name = 'New';
         $status->description = 'submitted ticket';
+        $status->label_class = 'danger';
         $status->is_active = true;
         $status->save();
 
         $status = new Status();
         $status->name = 'On-process';
         $status->description = 'ticket is in ongoing process';
+        $status->label_class = 'success';
         $status->is_active = true;
         $status->save();
 
         $status = new Status();
         $status->name = 'Close';
         $status->description = 'ticket close and done';
+        $status->label_class = 'default';
         $status->is_active = true;
         $status->save();
 
     }
 
-    public function createTicketSPriority(){
-
-        $priority = new Priority();
-        $priority->name = 'Low';
-        $priority->description = '';
-        $priority->is_active = true;
-        $priority->save();
-
-        $priority = new Priority();
-        $priority->name = 'Medium';
-        $priority->description = '';
-        $priority->is_active = true;
-        $priority->save();
-
-        $priority = new Priority();
-        $priority->name = 'High';
-        $priority->description = '';
-        $priority->is_active = true;
-        $priority->save();
-    }
 }

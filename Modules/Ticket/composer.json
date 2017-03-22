@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/role",
+    "name": "nwidart/ticket",
     "description": "",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Modules\\Role\\": ""
+            "Modules\\Ticket\\": ""
         }
     }
 }

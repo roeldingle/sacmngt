@@ -39,7 +39,7 @@
 
 
     <li> <a href="widgets.html"><i class="icon icon-trophy"></i> <span>My SAC Pins</span></a> </li>
-    <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>IT Support</span></a> </li>
+    <li class="@if($main == 'ITSupport')  active  @endif" > <a href="/ticket/it"><i class="icon icon-signal"></i> <span>IT Support</span></a> </li>
     <li> <a href="charts.html"><i class="icon icon-paper-clip"></i> <span>HR Support</span></a> </li>
 
     <!--superadmin can view-->

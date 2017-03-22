@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 use Modules\Ticket\Entities\Ticket;
-use Modules\User\Entities\Department;
+use Modules\Department\Entities\Department;
 use Auth;
 
 class TicketMiddleware

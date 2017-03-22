@@ -56,7 +56,6 @@ class MyteamController extends Controller
                 ->withErrors($validator);
         }
 
-
         $mytask = new Mytask();
         $mytask->team_id = $request->input('team_id');
         $mytask->assign_id = $request->input('assign_id');
